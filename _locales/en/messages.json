@@ -1,10 +1,10 @@
 {
   "extName": {
-    "message": "Cupsie",
+    "message": "Cupsie Corp",
     "description": "The name of the extension."
   },
   "extDesc": {
-    "message": "Adds CUPS-based printers and IPP printers to the native Chrome Print Dialog.",
+    "message": "Enterprise version of Cupsie. Adds CUPS-based printers and IPP printers to the native Chrome Print Dialog.",
     "description": "Description of the extension."
   },
   "optionsPageTitle": {
