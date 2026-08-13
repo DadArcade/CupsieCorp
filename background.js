@@ -101,7 +101,6 @@ async function startKeepAlive() {
         reasons: ['IFRAME_SCRIPTING'],
         justification: 'Keep service worker active for print job transfer'
       });
-      console.log('[keep-alive] Offscreen document created.');
     } catch (err) {
       console.error('[keep-alive] Failed to create offscreen document:', err);
     }
@@ -113,7 +112,6 @@ async function stopKeepAlive() {
   if (keepAliveCount === 0) {
     try {
       await chrome.offscreen.closeDocument();
-      console.log('[keep-alive] Offscreen document closed.');
     } catch (err) {
       console.error('[keep-alive] Failed to close offscreen document:', err);
     }
@@ -374,7 +372,6 @@ chrome.windows.onRemoved.addListener(async (windowId) => {
     const storage = await chrome.storage.local.get(['loginWindowId']);
     if (storage.loginWindowId === windowId) {
       await chrome.storage.local.remove(['loginWindowId']);
-      console.log('Login window ID cleared from storage.');
     }
   } catch (e) {
     // Ignore errors
@@ -426,7 +423,6 @@ async function updateAlarm() {
     chrome.alarms.create(BACKGROUND_SYNC_ALARM, {
       periodInMinutes: period
     });
-    console.log(`Updated background sync alarm period to ${period} minutes.`);
   } catch (e) {
     console.error('Failed to create background sync alarm:', e);
   }
@@ -819,7 +815,6 @@ async function syncPrinters(onProgress, isInteractive = false) {
       console.group(`[CUPS] → ${serverUrl}`);
       try {
         const endpoint = serverUrl.endsWith('/') ? serverUrl : serverUrl + '/';
-        console.log(`  Sending CUPS-Get-Printers to ${endpoint} …`);
         const requestBuffer = buildIppRequest(IPP_OPS.CUPS_Get_Printers, 1, toIppScheme(endpoint));
 
         const performFetch = async () => {
@@ -1435,7 +1430,6 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
         return;
       }
 
-      console.log(`[onPrintRequested] Reading response body arrayBuffer...`);
       const responseBuffer = await response.arrayBuffer();
       console.log(`[onPrintRequested] Response buffer size: ${responseBuffer.byteLength} bytes.`);
       const parsed = parseIppResponse(responseBuffer);
@@ -1444,9 +1438,7 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
       // IPP status 0x0000–0x00FF = successful (may include minor warnings)
       if (parsed.statusCode >= 0x0000 && parsed.statusCode <= 0x00FF) {
         console.log(`Print job dispatched successfully: ${printJob.title}`);
-        console.log(`[onPrintRequested] Invoking callback('OK')...`);
         callback('OK');
-        console.log(`[onPrintRequested] Callback('OK') invoked.`);
       } else {
         console.warn(`Print Job accepted by server but returned warning status: ${parsed.statusCode}`);
         const msgKey = IPP_STATUS_MESSAGES[parsed.statusCode];
