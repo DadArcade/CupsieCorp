@@ -424,6 +424,8 @@ async function updateAlarm() {
 // --- User Authorization & Notification Helpers ---
 
 async function getUsername() {
+  let configuredUser = null;
+
   // Read enterprise policy values first
   if (chrome.storage && chrome.storage.managed) {
     try {
@@ -433,7 +435,7 @@ async function getUsername() {
         if (typeof val === 'string') {
           const trimmed = val.trim();
           if (trimmed) {
-            return trimmed;
+            configuredUser = trimmed;
           } else {
             console.warn('Enterprise policy "defaultRequestingUser" is configured as an empty string.');
           }
@@ -447,47 +449,61 @@ async function getUsername() {
   }
 
   // Fallback to user storage
-  try {
-    const storage = await chrome.storage.sync.get(['defaultRequestingUser']);
-    if (storage && storage.defaultRequestingUser !== undefined) {
-      const val = storage.defaultRequestingUser;
-      if (typeof val === 'string') {
-        const trimmed = val.trim();
-        if (trimmed) {
-          return trimmed;
-        } else {
-          console.warn('User option "defaultRequestingUser" is configured as an empty string.');
-        }
-      } else {
-        console.error('Bad configuration value: User option "defaultRequestingUser" must be a string, got:', val);
-      }
-    }
-  } catch (e) {
-    console.warn('Failed to read defaultRequestingUser from storage.sync:', e);
-  }
-
-  // Fallback to chrome.identity (retrieve logged in profile email, extract username)
-  if (chrome.identity && chrome.identity.getProfileUserInfo) {
+  if (configuredUser === null) {
     try {
-      let userInfo;
-      try {
-        userInfo = await chrome.identity.getProfileUserInfo({ accountStatus: 'ANY' });
-      } catch (e) {
-        userInfo = await chrome.identity.getProfileUserInfo();
-      }
-      if (userInfo && userInfo.email) {
-        const email = userInfo.email.trim();
-        if (email && email.includes('@')) {
-          const extractedUser = email.split('@')[0];
-          if (extractedUser) {
-            console.log(`Extracted default requesting username from logged-in user identity: ${extractedUser}`);
-            return extractedUser;
+      const storage = await chrome.storage.sync.get(['defaultRequestingUser']);
+      if (storage && storage.defaultRequestingUser !== undefined) {
+        const val = storage.defaultRequestingUser;
+        if (typeof val === 'string') {
+          const trimmed = val.trim();
+          if (trimmed) {
+            configuredUser = trimmed;
+          } else {
+            console.warn('User option "defaultRequestingUser" is configured as an empty string.');
           }
+        } else {
+          console.error('Bad configuration value: User option "defaultRequestingUser" must be a string, got:', val);
         }
       }
     } catch (e) {
-      console.warn('Failed to retrieve user info via chrome.identity:', e);
+      console.warn('Failed to read defaultRequestingUser from storage.sync:', e);
     }
+  }
+
+  // Fallback to chrome.identity (retrieve logged in profile email, extract username)
+  if (configuredUser === null || configuredUser.includes('${user_name}')) {
+    let identityUser = null;
+    if (chrome.identity && chrome.identity.getProfileUserInfo) {
+      try {
+        let userInfo;
+        try {
+          userInfo = await chrome.identity.getProfileUserInfo({ accountStatus: 'ANY' });
+        } catch (e) {
+          userInfo = await chrome.identity.getProfileUserInfo();
+        }
+        if (userInfo && userInfo.email) {
+          const email = userInfo.email.trim();
+          if (email && email.includes('@')) {
+            const extractedUser = email.split('@')[0];
+            if (extractedUser) {
+              console.log(`Extracted default requesting username from logged-in user identity: ${extractedUser}`);
+              identityUser = extractedUser;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to retrieve user info via chrome.identity:', e);
+      }
+    }
+
+    if (configuredUser !== null) {
+      return configuredUser.replace(/\$\{user_name\}/g, identityUser || 'Chrome User');
+    }
+    if (identityUser !== null) {
+      return identityUser;
+    }
+  } else if (configuredUser !== null) {
+    return configuredUser;
   }
 
   return 'Chrome User';

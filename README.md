@@ -9,7 +9,7 @@ It is designed to be **zero-touch** for end users, allowing administrators to pu
 ## Key Enterprise Features
 
 * **Zero-Touch Deployment**: Silently force-install the extension and push pre-configured CUPS servers and standalone IPP printers. End users receive no permission prompts.
-* **Auto-Identity Resolution**: Queries the user's active Chrome Profile using the `identity` API to negotiate printing authorization on CUPS servers automatically, or can be overridden via policy.
+* **Auto-Identity Resolution**: Queries the user's active Chrome Profile using the `identity` API to negotiate printing authorization on CUPS servers automatically, or can be overridden via policy. You can use the `"${user_name}"` placeholder to embed the user's resolved username into the configured `defaultRequestingUser`.
 * **Native Chrome Print Integration**: Integrates IPP/CUPS printers seamlessly into the Chrome browser print destination picker.
 * **Robust Capabilities Mapping**: Queries printer capabilities via IPP (paper sizes, tray selection, duplex, color, print scaling, stapling, hole punching, folding, etc.) and maps them to Chrome print settings automatically.
 * **Managed Policy Precedence**: Configurations pushed via enterprise policy override or take precedence over manual user configurations.

@@ -97,7 +97,10 @@ function saveOptions() {
   });
 
   const syncInterval = parseInt(document.getElementById('syncInterval').value, 10);
-  const defaultRequestingUser = document.getElementById('defaultRequestingUser').value.trim();
+  const defaultRequestingUserEl = document.getElementById('defaultRequestingUser');
+  const defaultRequestingUser = (defaultRequestingUserEl.disabled && defaultRequestingUserEl.dataset.rawValue !== undefined)
+      ? defaultRequestingUserEl.dataset.rawValue
+      : defaultRequestingUserEl.value.trim();
 
   if (isNaN(syncInterval) || syncInterval < 1 || syncInterval > 1440) {
     showStatus('syncIntervalInvalid', 'error');
@@ -228,7 +231,8 @@ async function restoreUserAndLocalOptions(managed) {
     if (managed.defaultRequestingUser !== undefined) {
       const userInput = document.getElementById('defaultRequestingUser');
       if (userInput) {
-        userInput.value = managed.defaultRequestingUser;
+        userInput.dataset.rawValue = managed.defaultRequestingUser;
+        userInput.value = await resolveUsernameForDisplay(managed.defaultRequestingUser);
         userInput.disabled = true;
       }
       const badge = document.getElementById('managedUserBadge');
@@ -283,7 +287,15 @@ async function restoreUserAndLocalOptions(managed) {
   // Apply local requesting username value only if it's not managed by enterprise policy
   if (items.defaultRequestingUser !== undefined && (!managed || managed.defaultRequestingUser === undefined)) {
     const userInput = document.getElementById('defaultRequestingUser');
-    if (userInput) userInput.value = items.defaultRequestingUser;
+    if (userInput) {
+      userInput.dataset.rawValue = items.defaultRequestingUser;
+      if (typeof items.defaultRequestingUser === 'string' && items.defaultRequestingUser.includes('${user_name}')) {
+        userInput.value = await resolveUsernameForDisplay(items.defaultRequestingUser);
+        userInput.disabled = true;
+      } else {
+        userInput.value = items.defaultRequestingUser;
+      }
+    }
   }
   if (items.lastSyncTime) {
     const d = new Date(items.lastSyncTime);
@@ -432,4 +444,30 @@ function renderStoredCredentials(credentials) {
     fragment.appendChild(row);
   });
   container.appendChild(fragment);
+}
+
+async function resolveUsernameForDisplay(configuredUser) {
+  if (typeof configuredUser !== 'string' || !configuredUser.includes('${user_name}')) {
+    return configuredUser;
+  }
+  let identityUser = null;
+  if (chrome.identity && chrome.identity.getProfileUserInfo) {
+    try {
+      let userInfo;
+      try {
+        userInfo = await chrome.identity.getProfileUserInfo({ accountStatus: 'ANY' });
+      } catch (e) {
+        userInfo = await chrome.identity.getProfileUserInfo();
+      }
+      if (userInfo && userInfo.email && userInfo.email.includes('@')) {
+        const extractedUser = userInfo.email.trim().split('@')[0];
+        if (extractedUser) {
+          identityUser = extractedUser;
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to retrieve user info via chrome.identity:', e);
+    }
+  }
+  return configuredUser.replace(/\$\{user_name\}/g, identityUser || 'Chrome User');
 }

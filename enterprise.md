@@ -19,7 +19,7 @@ graph TD
 
 ### Key Enterprise Design Patterns:
 * **Default Host Permissions**: Cupsie declares default host permissions for `*://*/*`. Users never receive permissions prompts upon installation or server configuration.
-* **Auto-Identity Resolution**: If not overridden by policy, the extension queries the user's active Chrome Profile using the `identity` API, extracts their username from the profile email (e.g., `bob` from `bob@company.com`), and uses it to negotiate printing authorization on CUPS servers.
+* **Auto-Identity Resolution**: If not overridden by policy, the extension queries the user's active Chrome Profile using the `identity` API, extracts their username from the profile email (e.g., `bob` from `bob@company.com`), and uses it to negotiate printing authorization on CUPS servers. Administrators can explicitly embed this resolved username in the `defaultRequestingUser` field using the `"${user_name}"` placeholder (e.g. `"prefix_${user_name}"`).
 * **Managed Precedence**: Enterprise configuration settings loaded from Chrome Managed Storage override or take precedence over the user's manual settings.
 
 ---
