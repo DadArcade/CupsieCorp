@@ -478,7 +478,9 @@ async function getUsername() {
   }
 
   // Fallback to chrome.identity (retrieve logged in profile email, extract username)
-  if (configuredUser === null || configuredUser.includes('${user_name}')) {
+  const hasPlaceholder = configuredUser !== null &&
+    (configuredUser.includes('${user_name}') || configuredUser.includes('#{user_name}'));
+  if (configuredUser === null || hasPlaceholder) {
     let identityUser = null;
     if (chrome.identity && chrome.identity.getProfileUserInfo) {
       try {
@@ -496,7 +498,11 @@ async function getUsername() {
               console.log(`Extracted default requesting username from logged-in user identity: ${extractedUser}`);
               identityUser = extractedUser;
             }
+          } else {
+            console.warn('chrome.identity returned an empty or invalid email. Ensure the "identity.email" permission is declared and the user is signed in.');
           }
+        } else {
+          console.warn('chrome.identity.getProfileUserInfo() returned no email. Ensure the "identity.email" permission is declared and the user is signed in.');
         }
       } catch (e) {
         console.warn('Failed to retrieve user info via chrome.identity:', e);
@@ -504,7 +510,9 @@ async function getUsername() {
     }
 
     if (configuredUser !== null) {
-      return configuredUser.replace(/\$\{user_name\}/g, identityUser || 'Chrome User');
+      return configuredUser
+        .replace(/\$\{user_name\}/g, identityUser || 'Chrome User')
+        .replace(/#\{user_name\}/g, identityUser || 'Chrome User');
     }
     if (identityUser !== null) {
       return identityUser;
