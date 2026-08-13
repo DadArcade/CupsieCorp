@@ -1,8 +1,8 @@
-# Cupsie Printer Provider (Enterprise Edition)
+# Cupsie Corp Printer Provider (Enterprise Edition)
 
-**Cupsie Printer Provider** is an enterprise-oriented Chrome extension that enables system administrators to centrally deploy and configure CUPS print queues and standalone IPP/IPPS printers directly into the native Chrome Print Dialog using Chrome's `printerProvider` API.
+**Cupsie Corp* is an enterprise-oriented [Chrome extension](https://chromewebstore.google.com/detail/blocbkaedafljnkkmhmlhnlpokoajdjg) that enables system administrators to centrally deploy and configure CUPS print queues and standalone IPP/IPPS printers directly into the native Chrome Print Dialog using Chrome's `printerProvider` API.
 
-It is designed to be **zero-touch** for end users, allowing administrators to push printer configurations silently via Chrome Managed Storage policies.
+It is designed to be **zero-touch** for end users, allowing administrators to push printer configurations silently via Chrome policies.
 
 ---
 
@@ -31,7 +31,7 @@ For comprehensive instructions on managed policy schemas, Google Admin Console c
 While Cupsie is optimized for enterprise management, users or administrators can also configure printers manually on individual devices.
 
 ### Manual Installation
-Open the [Cupsie Extension](https://chromewebstore.google.com/detail/dekecaodhfljnecmmkenlmjfcbmdokno/) on the Chrome Web Store and click **Add to Chrome**.
+Open the [Cupsie Extension](https://chromewebstore.google.com/detail/blocbkaedafljnkkmhmlhnlpokoajdjg) on the Chrome Web Store and click **Add to Chrome**. If a domain policy exists, it will be applied automatically.
 
 ### Adding Printers Manually
 1. Open the extension **Options** page (right-click the extension icon and select **Options**, or navigate to `chrome://extensions` and click **Extension options**).
@@ -39,6 +39,9 @@ Open the [Cupsie Extension](https://chromewebstore.google.com/detail/dekecaodhfl
    - Under **CUPS Servers**, enter your CUPS server IP addresses or URLs (one per line).
    - *Example*: `http://192.168.1.10:631` or `https://cups-server.example.com`
    - The extension automatically connects to each server and fetches all available printer queues.
+> [!NOTE]
+> If using HTTPS, the SSL certificate must be trusted by the browser.
+
 3. **Adding Standalone IPP Printers**:
    - Under **Standalone IPP Printers**, enter the direct IPP URL endpoint and an optional friendly display name.
    - *Example*:
