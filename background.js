@@ -86,6 +86,7 @@ console.error = function (...args) {
 import { buildIppRequest, parseIppResponse, IPP_OPS, TAGS } from './ipp.js';
 import { buildCDD } from './cdd.js';
 import { retry, notifyUserError, getHostname, fetchWithTimeout } from './errorHandler.js';
+import { normalizeIppPrinter } from './utils.js';
 
 
 // --- Service Worker Keep-Alive Management via Offscreen Document ---
@@ -137,7 +138,7 @@ const PRINT_JOB_TIMEOUT_MS = 600000;
  * where printer-uri uses the http:// scheme (RFC 8011 §4.1.5).
  * The fetch() transport URL is unaffected and stays as http://.
  */
-function toIppScheme(url) {
+export function toIppScheme(url) {
   if (/^https:\/\//i.test(url)) return url.replace(/^https:\/\//i, 'ipps://');
   if (/^http:\/\//i.test(url)) return url.replace(/^http:\/\//i, 'ipp://');
   return url;
@@ -147,10 +148,20 @@ function toIppScheme(url) {
  * Converts an ipp(s):// URL back to http(s):// for use in fetch().
  * Chrome's fetch API strictly rejects the ipp:// scheme.
  */
-function toHttpScheme(url) {
+export function toHttpScheme(url) {
   if (/^ipps:\/\//i.test(url)) return url.replace(/^ipps:\/\//i, 'https://');
   if (/^ipp:\/\//i.test(url)) return url.replace(/^ipp:\/\//i, 'http://');
   return url;
+}
+
+/**
+ * Helper to format byte sizes into a human-readable string.
+ */
+export function formatBytes(bytes) {
+  if (typeof bytes !== 'number' || isNaN(bytes)) return '0 B';
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1048576).toFixed(1)} MB`;
 }
 
 // --- Printer Authentication Helpers ---
@@ -509,7 +520,7 @@ async function getUsername() {
   return 'Chrome User';
 }
 
-function isUserAllowed(username, allowedList, deniedList) {
+export function isUserAllowed(username, allowedList, deniedList) {
   if (!username) return true;
   const lowerUser = username.toLowerCase();
 
@@ -676,16 +687,6 @@ function isValidUrl(urlStr) {
   } catch (e) {
     return false;
   }
-}
-
-function normalizeIppPrinter(p) {
-  if (typeof p === 'string') {
-    return { url: p, name: '' };
-  }
-  if (p && typeof p === 'object' && p.url) {
-    return { url: p.url, name: p.name || '' };
-  }
-  return null;
 }
 
 let activeSyncPromise = null;
@@ -1049,7 +1050,7 @@ async function syncPrinters(onProgress, isInteractive = false) {
 
         await clearDeviceAuthRequired(successUrl);
 
-        const pg = finalParsed.groups.find(g => g.tag === 4) || { attributes: {} };
+        const pg = finalParsed.groups.find(g => g.tag === TAGS.printer_attributes_tag) || { attributes: {} };
         const allowedList = pg.attributes['requesting-user-name-allowed'];
         const deniedList = pg.attributes['requesting-user-name-denied'];
         const name = printer.name || pg.attributes['printer-info']?.[0] || pg.attributes['printer-name']?.[0] || successUrl;
@@ -1153,8 +1154,8 @@ chrome.printerProvider.onGetCapabilityRequested.addListener(async (printerId, ca
   console.log(`Capabilities requested for: ${printerId}`);
 
   try {
-    const storage = await chrome.storage.local.get(['ignoredAuthDevices']);
-    const ignored = storage.ignoredAuthDevices || {};
+    const capStorage = await chrome.storage.local.get(['ignoredAuthDevices', 'capabilitiesCache']);
+    const ignored = capStorage.ignoredAuthDevices || {};
     if (ignored[printerId]) {
       console.log(`Capabilities request skipped: device is ignored by user due to auth requirements: ${printerId}`);
       callback(buildCDD({}));
@@ -1165,8 +1166,7 @@ chrome.printerProvider.onGetCapabilityRequested.addListener(async (printerId, ca
 
     let cachedEntry = null;
     try {
-      const storage = await chrome.storage.local.get(['capabilitiesCache']);
-      const cache = storage.capabilitiesCache || {};
+      const cache = capStorage.capabilitiesCache || {};
       cachedEntry = cache[printerId];
 
       if (cachedEntry && cachedEntry.timestamp && (Date.now() - cachedEntry.timestamp < 24 * 60 * 60 * 1000)) {
@@ -1255,7 +1255,7 @@ chrome.printerProvider.onGetCapabilityRequested.addListener(async (printerId, ca
         }
 
         if (isSuccess) {
-          const pg = parsed.groups.find(g => g.tag === 4) || { attributes: {} };
+          const pg = parsed.groups.find(g => g.tag === TAGS.printer_attributes_tag) || { attributes: {} };
 
           const allowedList = pg.attributes['requesting-user-name-allowed'];
           const deniedList = pg.attributes['requesting-user-name-denied'];
@@ -1351,8 +1351,8 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
   console.log(`Print job requested for: ${printJob.printerId}`);
   await startKeepAlive();
   try {
-    const storage = await chrome.storage.local.get(['ignoredAuthDevices']);
-    const ignored = storage.ignoredAuthDevices || {};
+    const printStorage = await chrome.storage.local.get(['ignoredAuthDevices', 'capabilitiesCache', 'cachedPrinters']);
+    const ignored = printStorage.ignoredAuthDevices || {};
     if (ignored[printJob.printerId]) {
       console.warn(`Print job blocked: device is ignored by user due to auth requirements: ${printJob.printerId}`);
       showPrintFailureNotification(printJob.title, chrome.i18n.getMessage('errHttpUnauthorized'));
@@ -1366,8 +1366,7 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
     // Check capabilitiesCache for access control list and version before printing
     let ippVersion = 0x0200;
     try {
-      const storage = await chrome.storage.local.get(['capabilitiesCache', 'cachedPrinters']);
-      const cache = storage.capabilitiesCache || {};
+      const cache = printStorage.capabilitiesCache || {};
       const cachedEntry = cache[printJob.printerId];
       if (cachedEntry) {
         if (!isUserAllowed(username, cachedEntry.allowedList, cachedEntry.deniedList)) {
@@ -1381,7 +1380,7 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
           ippVersion = cachedEntry.ippVersion;
         }
       } else {
-        const cachedPrinters = storage.cachedPrinters || [];
+        const cachedPrinters = printStorage.cachedPrinters || [];
         const match = cachedPrinters.find(p => p.id === printJob.printerId);
         if (match && match.ippVersion) {
           ippVersion = match.ippVersion;
@@ -1394,24 +1393,17 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
     const docFormat = printJob.contentType || 'application/pdf';
 
     // Construct the IPP Job Attributes header based on the selected CDD options
-    const ippHeader = buildIppRequest(IPP_OPS.Print_Job, 4, toIppScheme(printJob.printerId), true, printJob.title, printJob.ticket, userName, ippVersion, docFormat);
-
-    // Retrieve the actual document bytes
-    const documentBuffer = await printJob.document.arrayBuffer();
-
-    // Combine the IPP Header payload and the PDF document directly sequentially
+    const ippHeader = buildIppRequest(IPP_OPS.Print_Job, 4, toIppScheme(printJob.printerId), true, printJob.title, printJob.ticket, userName, ippVersion, docFormat, null);
     const ippBytes = new Uint8Array(ippHeader);
-    const docBytes = new Uint8Array(documentBuffer);
-    const payload = new Uint8Array(ippBytes.length + docBytes.length);
-    payload.set(ippBytes, 0);
-    payload.set(docBytes, ippBytes.length);
+    const payloadBody = new Blob([ippBytes, printJob.document], { type: 'application/ipp' });
+    const headers = { 'Content-Type': 'application/ipp' };
 
     // Submit the print job to the endpoint
     const submitPrintJob = async () => {
       const res = await fetchWithAuth(printJob.printerId, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/ipp' },
-        body: new Blob([payload], { type: 'application/ipp' })
+        headers: headers,
+        body: payloadBody
       }, PRINT_JOB_TIMEOUT_MS);
       if (!res.ok && res.status >= 500) {
         throw new Error(`HTTP ${res.status}`);
@@ -1419,11 +1411,18 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
       return res;
     };
 
+    const docSize = printJob.document ? printJob.document.size : 0;
+    const payloadSize = payloadBody.size;
+    const formattedDocSize = formatBytes(docSize);
+    const formattedPayloadSize = formatBytes(payloadSize);
+    console.log(`[onPrintRequested] Submitting print job "${printJob.title}" to ${printJob.printerId}. Document size: ${formattedDocSize}, IPP payload size: ${formattedPayloadSize}...`);
     const response = await retry(submitPrintJob, [], { retries: 2, delay: 1500, url: printJob.printerId });
+    console.log(`[onPrintRequested] Submit print job returned. Ok: ${response.ok}, Status: ${response.status}`);
 
     if (response.ok) {
       await clearDeviceAuthRequired(printJob.printerId);
       const contentType = response.headers.get('Content-Type') || '';
+      console.log(`[onPrintRequested] Content-Type: ${contentType}`);
       if (contentType && !contentType.includes('application/ipp')) {
         console.warn(`Print job response was not IPP: ${contentType}`);
         const text = await response.text();
@@ -1436,18 +1435,24 @@ chrome.printerProvider.onPrintRequested.addListener(async (printJob, callback) =
         return;
       }
 
+      console.log(`[onPrintRequested] Reading response body arrayBuffer...`);
       const responseBuffer = await response.arrayBuffer();
+      console.log(`[onPrintRequested] Response buffer size: ${responseBuffer.byteLength} bytes.`);
       const parsed = parseIppResponse(responseBuffer);
+      console.log(`[onPrintRequested] Parsed IPP status code: 0x${parsed.statusCode.toString(16).padStart(4, '0')}`);
 
       // IPP status 0x0000–0x00FF = successful (may include minor warnings)
       if (parsed.statusCode >= 0x0000 && parsed.statusCode <= 0x00FF) {
         console.log(`Print job dispatched successfully: ${printJob.title}`);
+        console.log(`[onPrintRequested] Invoking callback('OK')...`);
         callback('OK');
+        console.log(`[onPrintRequested] Callback('OK') invoked.`);
       } else {
         console.warn(`Print Job accepted by server but returned warning status: ${parsed.statusCode}`);
         const msgKey = IPP_STATUS_MESSAGES[parsed.statusCode];
         const reason = msgKey ? chrome.i18n.getMessage(msgKey) : chrome.i18n.getMessage('ipp_error_unknown', [`0x${parsed.statusCode.toString(16).padStart(4, '0')}`]);
         showPrintFailureNotification(printJob.title, reason);
+        console.log(`[onPrintRequested] Invoking callback('FAILED')...`);
         callback('FAILED');
       }
     } else {

@@ -1,3 +1,5 @@
+import { normalizeIppPrinter, getMatchPattern } from './utils.js';
+
 let loadedCredentials = {};
 let statusTimer = null;
 
@@ -48,38 +50,12 @@ function validateAndFormatUrl(urlStr) {
   return u;
 }
 
-function getMatchPattern(urlStr) {
-  let u = urlStr.trim();
-  if (!u) return null;
-
-  // Add schema fallback if user entered a raw IP/domain
-  if (!/^[a-zA-Z0-9+-.]+:\/\//.test(u)) {
-    u = 'http://' + u;
-  }
-  
-  // Convert IPP schemas to HTTP/S to match standard URL parsing
-  if (/^ipps:\/\//i.test(u)) {
-    u = u.replace(/^ipps:\/\//i, 'https://');
-  } else if (/^ipp:\/\//i.test(u)) {
-    u = u.replace(/^ipp:\/\//i, 'http://');
-  }
-
-  try {
-    const url = new URL(u);
-    // Requesting *://hostname/* matches http/https and any port (like :631)
-    return `*://${url.hostname}/*`;
-  } catch (e) {
-    console.error('Failed to parse match pattern from URL:', urlStr, e);
-    return null;
-  }
-}
-
 function saveOptions() {
   document.getElementById('saveBtn').disabled = true;
   const cupsServers = document.getElementById('cupsServers').value
-                        .split('\n')
-                        .map(validateAndFormatUrl)
-                        .filter(s => s.length > 0);
+    .split('\n')
+    .map(validateAndFormatUrl)
+    .filter(s => s.length > 0);
 
   const ippPrinters = [];
   document.querySelectorAll('.ipp-printer-row').forEach(row => {
@@ -99,8 +75,8 @@ function saveOptions() {
   const syncInterval = parseInt(document.getElementById('syncInterval').value, 10);
   const defaultRequestingUserEl = document.getElementById('defaultRequestingUser');
   const defaultRequestingUser = (defaultRequestingUserEl.disabled && defaultRequestingUserEl.dataset.rawValue !== undefined)
-      ? defaultRequestingUserEl.dataset.rawValue
-      : defaultRequestingUserEl.value.trim();
+    ? defaultRequestingUserEl.dataset.rawValue
+    : defaultRequestingUserEl.value.trim();
 
   if (isNaN(syncInterval) || syncInterval < 1 || syncInterval > 1440) {
     showStatus('syncIntervalInvalid', 'error');
@@ -178,7 +154,7 @@ async function restoreOptions() {
 
 async function restoreUserAndLocalOptions(managed) {
   const hasManaged = managed && Object.keys(managed).length > 0;
-  
+
   if (hasManaged) {
     if (managed.cupsServers && managed.cupsServers.length > 0) {
       const el = document.getElementById('managedCupsServers');
@@ -196,19 +172,19 @@ async function restoreUserAndLocalOptions(managed) {
           if (norm) {
             const row = document.createElement('div');
             row.className = 'printer-row-managed';
-            
+
             const urlInput = document.createElement('input');
             urlInput.type = 'text';
             urlInput.className = 'managed-url';
             urlInput.value = norm.url;
             urlInput.readOnly = true;
-            
+
             const nameInput = document.createElement('input');
             nameInput.type = 'text';
             nameInput.className = 'managed-name';
             nameInput.value = norm.name;
             nameInput.readOnly = true;
-            
+
             row.appendChild(urlInput);
             row.appendChild(nameInput);
             fragment.appendChild(row);
@@ -315,12 +291,17 @@ function renderSyncResults(results) {
   const list = document.getElementById('syncLog');
   if (!list) return;
   list.innerHTML = '';
-  
+
   if (!results || Object.keys(results).length === 0) {
-    list.innerHTML = `<li><span class="note">${chrome.i18n.getMessage('noPrintersConfigured')}</span></li>`;
+    const li = document.createElement('li');
+    const span = document.createElement('span');
+    span.className = 'note';
+    span.textContent = chrome.i18n.getMessage('noPrintersConfigured');
+    li.appendChild(span);
+    list.appendChild(li);
     return;
   }
-  
+
   const fragment = document.createDocumentFragment();
   for (const [url, data] of Object.entries(results)) {
     const li = document.createElement('li');
@@ -342,35 +323,25 @@ function renderSyncResults(results) {
   list.appendChild(fragment);
 }
 
-function normalizeIppPrinter(p) {
-  if (typeof p === 'string') {
-    return { url: p, name: '' };
-  }
-  if (p && typeof p === 'object' && p.url) {
-    return { url: p.url, name: p.name || '' };
-  }
-  return null;
-}
-
 function addPrinterRow(url = '', name = '', targetParent = null) {
   const container = targetParent || document.getElementById('ippPrintersContainer');
   if (!container) return;
-  
+
   const row = document.createElement('div');
   row.className = 'ipp-printer-row printer-row';
-  
+
   const urlInput = document.createElement('input');
   urlInput.type = 'text';
   urlInput.className = 'printer-url';
   urlInput.placeholder = 'http://192.168.1.50:631/ipp/print';
   urlInput.value = url;
-  
+
   const nameInput = document.createElement('input');
   nameInput.type = 'text';
   nameInput.className = 'printer-name';
   nameInput.placeholder = chrome.i18n.getMessage('printerNamePlaceholder') || 'Name (optional)';
   nameInput.value = name;
-  
+
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
   removeBtn.className = 'remove-btn';
@@ -383,7 +354,7 @@ function addPrinterRow(url = '', name = '', targetParent = null) {
       addPrinterRow('', '');
     }
   });
-  
+
   row.appendChild(urlInput);
   row.appendChild(nameInput);
   row.appendChild(removeBtn);

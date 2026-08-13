@@ -59,9 +59,12 @@ const MEDIA_MAP = {
  * @param {string} jobName - string title of the job
  * @param {Object} cjt - Chrome Job Ticket for print options
  * @param {string} userName - the user printing this job
+ * @param {number} ippVersion - IPP protocol version
+ * @param {string} documentFormat - mime type of the document
+ * @param {string|null} compression - compression type (e.g. 'gzip')
  * @returns {ArrayBuffer}
  */
-export function buildIppRequest(operationId, requestId, targetUri, isPrintJob = false, jobName = 'Print Job', cjt = null, userName = 'Chrome User', ippVersion = 0x0200, documentFormat = 'application/pdf') {
+export function buildIppRequest(operationId, requestId, targetUri, isPrintJob = false, jobName = 'Print Job', cjt = null, userName = 'Chrome User', ippVersion = 0x0200, documentFormat = 'application/pdf', compression = null) {
   let bytes = [];
 
   function writeInt16(val) {
@@ -111,12 +114,16 @@ export function buildIppRequest(operationId, requestId, targetUri, isPrintJob = 
   // Mandatory RFC 8011 operation attributes
   writeAttribute(TAGS.charset, 'attributes-charset', 'utf-8');
   writeAttribute(TAGS.naturalLanguage, 'attributes-natural-language', 'en-us');
-  writeAttribute(TAGS.uri, 'printer-uri', targetUri);
+  const cleanUri = targetUri.split('?')[0];
+  writeAttribute(TAGS.uri, 'printer-uri', cleanUri);
 
   if (isPrintJob) {
     writeAttribute(TAGS.nameWithoutLanguage, 'job-name', jobName);
     writeAttribute(TAGS.nameWithoutLanguage, 'requesting-user-name', userName);
     writeAttribute(TAGS.mimeMediaType, 'document-format', documentFormat);
+    if (compression) {
+      writeAttribute(TAGS.keyword, 'compression', compression);
+    }
 
     // Group 2: Job Attributes
     bytes.push(TAGS.job_attributes_tag);
@@ -333,7 +340,8 @@ export function parseIppResponse(arrayBuffer) {
     version,
     statusCode,
     requestId,
-    groups: [] // Array of { tag, attributes: {} }
+    groups: [], // Array of { tag, attributes: {} }
+    complete: false
   };
 
   let currentGroup = null;
@@ -344,7 +352,10 @@ export function parseIppResponse(arrayBuffer) {
     if (offset >= view.byteLength) break;
     const tag = view.getUint8(offset++);
 
-    if (tag === TAGS.end_of_attributes_tag) break;
+    if (tag === TAGS.end_of_attributes_tag) {
+      result.complete = true;
+      break;
+    }
 
     // All group delimiter tags are 0x01–0x0e (operation, job, printer, etc.)
     if (tag >= 0x01 && tag <= 0x0e) {

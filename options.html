@@ -480,8 +480,8 @@
   <div class="section">
     <div id="managedCupsSection" class="managed-section">
       <label class="managed-label" data-i18n="managedCupsLabel">Enterprise Managed CUPS Servers</label>
-      <textarea id="managedCupsServers" class="managed-textarea" readonly
-        data-i18n-placeholder="managedCupsPlaceholder" placeholder="(Managed CUPS servers)"></textarea>
+      <textarea id="managedCupsServers" class="managed-textarea" readonly data-i18n-placeholder="managedCupsPlaceholder"
+        placeholder="(Managed CUPS servers)"></textarea>
     </div>
 
     <label for="cupsServers" data-i18n="userCupsLabel">User CUPS Servers</label>
@@ -497,7 +497,8 @@
     </div>
 
     <label for="ippPrintersContainer" data-i18n="userIppLabel">User Standalone IPP Printers</label>
-    <p class="note" data-i18n="userIppNote">Enter direct HTTP/HTTPS or IPP/IPPS endpoint URLs and optional display names for your
+    <p class="note" data-i18n="userIppNote">Enter direct HTTP/HTTPS or IPP/IPPS endpoint URLs and optional display names
+      for your
       standalone printers (e.g., ipp://192.168.1.50:631/ipp/print or http://192.168.1.50:631/ipp/print).</p>
     <div id="ippPrintersContainer" class="printer-container"></div>
     <button type="button" id="addIppPrinterBtn" class="add-printer-btn">
@@ -507,7 +508,8 @@
 
   <div class="section" id="credentialsSection">
     <label data-i18n="storedCredentialsLabel">Stored Credentials</label>
-    <p class="note" data-i18n="storedCredentialsNote">Saved credentials for printers and CUPS servers requiring authentication.</p>
+    <p class="note" data-i18n="storedCredentialsNote">Saved credentials for printers and CUPS servers requiring
+      authentication.</p>
     <div id="credentialsContainer"></div>
   </div>
 
@@ -516,22 +518,23 @@
       <span data-i18n="defaultRequestingUserLabel">Default Requesting Username</span>
       <span id="managedUserBadge" class="managed-badge" data-i18n="managedByPolicyBadge">(Managed by Policy)</span>
     </label>
-    <p class="note" data-i18n="defaultRequestingUserNote">The username passed to printers that do not require authentication. If left blank, the logged-in user profile name will be used.</p>
-    <input type="text" id="defaultRequestingUser" class="text-input input--wide" data-i18n-placeholder="defaultRequestingUserPlaceholder" placeholder="e.g., john.doe">
+    <p class="note" data-i18n="defaultRequestingUserNote">The username passed to printers that do not require
+      authentication. If left blank, the logged-in user profile name will be used.</p>
+    <input type="text" id="defaultRequestingUser" class="text-input input--wide"
+      data-i18n-placeholder="defaultRequestingUserPlaceholder" placeholder="e.g., john.doe">
   </div>
 
   <div class="section">
     <label for="syncInterval"><span data-i18n="syncIntervalLabel">Background Sync Interval (minutes)</span> <span
-        id="managedIntervalBadge" class="managed-badge"
-        data-i18n="managedByPolicyBadge">(Managed by Policy)</span></label>
+        id="managedIntervalBadge" class="managed-badge" data-i18n="managedByPolicyBadge">(Managed by
+        Policy)</span></label>
     <p class="note" data-i18n="syncIntervalNote">How often the extension checks the network for new printers. Minimum 1
       minute.</p>
     <input type="number" id="syncInterval" min="1" max="1440" value="1440">
 
     <p class="note note--sync-time"><span data-i18n="lastSyncLabel">Last
         Sync:</span> <span id="lastSyncTime" data-i18n="never">Never</span></p>
-    <p class="note note--logs"><a href="logs.html" target="_blank"
-        data-i18n="viewLogsLink">View Troubleshooting
+    <p class="note note--logs"><a href="logs.html" target="_blank" data-i18n="viewLogsLink">View Troubleshooting
         Logs &rarr;</a></p>
 
     <div class="sync-divider">
@@ -547,7 +550,7 @@
   <div id="status" class="status" data-i18n="syncSuccess">Settings saved successfully! Printers will sync shortly.</div>
 
   <script src="i18n-helper.js"></script>
-  <script src="options.js"></script>
+  <script type="module" src="options.js"></script>
 </body>
 
 </html>
