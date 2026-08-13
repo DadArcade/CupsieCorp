@@ -1,61 +1,46 @@
-# Cupsie Corp Printer Provider (Enterprise Edition)
+# Cupsie Corp Printer Provider
 
-**Cupsie Corp* is an enterprise-oriented [Chrome extension](https://chromewebstore.google.com/detail/blocbkaedafljnkkmhmlhnlpokoajdjg) that enables system administrators to centrally deploy and configure CUPS print queues and standalone IPP/IPPS printers directly into the native Chrome Print Dialog using Chrome's `printerProvider` API.
+**Cupsie Corp** is an enterprise Chrome extension that connects CUPS print servers and standalone IPP/IPPS printers directly to the native Chrome print dialog using the `printerProvider` API.
 
-It is designed to be **zero-touch** for end users, allowing administrators to push printer configurations silently via Chrome policies.
-
----
-
-## Key Enterprise Features
-
-* **Zero-Touch Deployment**: Silently force-install the extension and push pre-configured CUPS servers and standalone IPP printers. End users receive no permission prompts.
-* **Auto-Identity Resolution**: Queries the user's active Chrome Profile using the `identity` API to negotiate printing authorization on CUPS servers automatically, or can be overridden via policy. You can use the `"${user_name}"` placeholder to embed the user's resolved username into the configured `defaultRequestingUser`.
-* **Native Chrome Print Integration**: Integrates IPP/CUPS printers seamlessly into the Chrome browser print destination picker.
-* **Robust Capabilities Mapping**: Queries printer capabilities via IPP (paper sizes, tray selection, duplex, color, print scaling, stapling, hole punching, folding, etc.) and maps them to Chrome print settings automatically.
-* **Managed Policy Precedence**: Configurations pushed via enterprise policy override or take precedence over manual user configurations.
-* **Diagnostics & Troubleshooting**: Includes a built-in logging UI to inspect connection status, policy validation, and printer response codes.
-* **Robust Background Printing**: Leverages a Chrome Offscreen Document keep-alive connection during active print cycles to prevent Chrome's memory optimizers from terminating the service worker during large print job transfers.
+Designed for **zero-touch deployment**, administrators can silently deploy and manage print queues across fleet devices via Chrome enterprise policies.
 
 ---
 
-## Enterprise Deployment Guide
+## Key Features
 
-For comprehensive instructions on managed policy schemas, Google Admin Console configuration, local policy setup, dynamic identity resolution (`${user_name}`), and policy behavior, see the official wiki documentation:
+* **Zero-Touch Deployment**: Silently force-install and configure printers via Chrome policy without user prompts.
+* **Auto-Identity Resolution**: Uses the `identity` API (or `${user_name}` placeholders) to authorize print requests under active profile accounts.
+* **Native Chrome Print Integration**: Integrates IPP/CUPS printers seamlessly into the Chrome destination picker.
+* **Automatic Capability Mapping**: Auto-detects paper sizes, trays, duplex, color, scaling, and finishing options via IPP.
+* **Policy Precedence**: Managed policies automatically override or take precedence over manual user settings.
+* **Built-in Diagnostics**: Includes a logging UI to monitor connections, policy validation, and printer status codes.
+* **Reliable Background Printing**: Employs an offscreen keep-alive connection to ensure large print jobs transfer without worker timeouts.
+
+---
+
+## Enterprise Deployment
+
+For complete instructions on policy schemas, Google Admin Console configuration, local policies, and dynamic identity resolution, see the official wiki:
 
 👉 **[Enterprise Deployment Guide](https://github.com/DadArcade/CupsieCorp/wiki/Enterprise)**
 
 ---
 
-## Manual & Ad-Hoc Configuration (Optional Feature)
+## Manual Setup (Optional)
 
-While Cupsie is optimized for enterprise management, users or administrators can also configure printers manually on individual devices.
+While Cupsie is optimized for enterprise management, printers can also be configured manually on individual devices:
 
-### Manual Installation
-Open the [Cupsie Extension](https://chromewebstore.google.com/detail/blocbkaedafljnkkmhmlhnlpokoajdjg) on the Chrome Web Store and click **Add to Chrome**. If a domain policy exists, it will be applied automatically.
-
-### Adding Printers Manually
-1. Open the extension **Options** page (right-click the extension icon and select **Options**, or navigate to `chrome://extensions` and click **Extension options**).
-2. **Adding CUPS Print Servers**:
-   - Under **CUPS Servers**, enter your CUPS server IP addresses or URLs (one per line).
-   - *Example*: `http://192.168.1.10:631` or `https://cups-server.example.com`
-   - The extension automatically connects to each server and fetches all available printer queues.
-> [!NOTE]
-> If using HTTPS, the SSL certificate must be trusted by the browser.
-
-3. **Adding Standalone IPP Printers**:
-   - Under **Standalone IPP Printers**, enter the direct IPP URL endpoint and an optional friendly display name.
-   - *Example*:
-     - **URL**: `http://192.168.1.50:631/ipp/print`
-     - **Name**: `Office Color Laser`
-   - Click **+ Add Another Printer** to add more printers.
-4. **Background Sync Interval**:
-   - Adjust the **Background Sync Interval (minutes)** to control how frequently Cupsie polls your servers and printers for state changes.
-   - Click **Save Settings** to persist configuration and trigger an immediate printer sync.
+1. **Install**: Add the [Cupsie Extension](https://chromewebstore.google.com/detail/blocbkaedafljnkkmhmlhnlpokoajdjg) from the Chrome Web Store.
+2. **Open Options**: Right-click the extension icon and select **Options** (or navigate to `chrome://extensions`).
+3. **Add CUPS Servers**: Under **CUPS Servers**, enter server URLs (e.g., `http://192.168.1.10:631`) to auto-discover queues. *(Note: HTTPS endpoints require trusted SSL certificates).*
+4. **Add IPP Printers**: Under **Standalone IPP Printers**, enter direct endpoints (e.g., `http://192.168.1.50:631/ipp/print`) and a friendly display name.
+5. **Save**: Adjust the background sync interval if desired, then click **Save Settings**.
 
 ---
 
 ## Privacy & Security
 
-By default, the extension does not send any data to external servers. All printer communication is performed locally from your browser to your print servers and printers.
+Cupsie operates entirely locally within the browser. Printer communications remain on your local network—no data is sent to external servers.
 
-For more details, see the full [Privacy Policy](privacy_policy.md).
+For details, view the full [Privacy Policy](privacy_policy.md).
+
