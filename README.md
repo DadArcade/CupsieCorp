@@ -46,5 +46,5 @@ For details, view the full [Privacy Policy](privacy_policy.md).
 
 ## Personal version
 
-If you're looking for a non-enterprise version of Cupsie, check out [Cupsie](https://github.com/DadArcade/cupsie).
+If you're looking for a non-enterprise version of Cupsie Corp, check out [Cupsie](https://github.com/DadArcade/cupsie).
 
