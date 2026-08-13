@@ -499,10 +499,10 @@ async function getUsername() {
               identityUser = extractedUser;
             }
           } else {
-            console.warn('chrome.identity returned an empty or invalid email. Ensure the "identity.email" permission is declared and the user is signed in.');
+            console.warn('chrome.identity returned an empty or invalid email. Ensure the user is signed in.');
           }
         } else {
-          console.warn('chrome.identity.getProfileUserInfo() returned no email. Ensure the "identity.email" permission is declared and the user is signed in.');
+          console.warn('chrome.identity.getProfileUserInfo() returned no email. Ensure the user is signed in.');
         }
       } catch (e) {
         console.warn('Failed to retrieve user info via chrome.identity:', e);
