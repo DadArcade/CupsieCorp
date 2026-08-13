@@ -116,10 +116,10 @@ export function buildIppRequest(operationId, requestId, targetUri, isPrintJob = 
   writeAttribute(TAGS.naturalLanguage, 'attributes-natural-language', 'en-us');
   const cleanUri = targetUri.split('?')[0];
   writeAttribute(TAGS.uri, 'printer-uri', cleanUri);
+  writeAttribute(TAGS.nameWithoutLanguage, 'requesting-user-name', userName);
 
   if (isPrintJob) {
     writeAttribute(TAGS.nameWithoutLanguage, 'job-name', jobName);
-    writeAttribute(TAGS.nameWithoutLanguage, 'requesting-user-name', userName);
     writeAttribute(TAGS.mimeMediaType, 'document-format', documentFormat);
     if (compression) {
       writeAttribute(TAGS.keyword, 'compression', compression);

@@ -823,7 +823,7 @@ async function syncPrinters(onProgress, isInteractive = false) {
       console.group(`[CUPS] → ${serverUrl}`);
       try {
         const endpoint = serverUrl.endsWith('/') ? serverUrl : serverUrl + '/';
-        const requestBuffer = buildIppRequest(IPP_OPS.CUPS_Get_Printers, 1, toIppScheme(endpoint));
+        const requestBuffer = buildIppRequest(IPP_OPS.CUPS_Get_Printers, 1, toIppScheme(endpoint), false, 'Print Job', null, username || 'Chrome User');
 
         const performFetch = async () => {
           const res = await fetchWithAuth(endpoint, {

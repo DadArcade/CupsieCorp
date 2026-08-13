@@ -265,7 +265,7 @@ async function restoreUserAndLocalOptions(managed) {
     const userInput = document.getElementById('defaultRequestingUser');
     if (userInput) {
       userInput.dataset.rawValue = items.defaultRequestingUser;
-      if (typeof items.defaultRequestingUser === 'string' && items.defaultRequestingUser.includes('${user_name}')) {
+      if (typeof items.defaultRequestingUser === 'string' && (items.defaultRequestingUser.includes('${user_name}') || items.defaultRequestingUser.includes('#{user_name}'))) {
         userInput.value = await resolveUsernameForDisplay(items.defaultRequestingUser);
         userInput.disabled = true;
       } else {
@@ -418,7 +418,7 @@ function renderStoredCredentials(credentials) {
 }
 
 async function resolveUsernameForDisplay(configuredUser) {
-  if (typeof configuredUser !== 'string' || !configuredUser.includes('${user_name}')) {
+  if (typeof configuredUser !== 'string' || (!configuredUser.includes('${user_name}') && !configuredUser.includes('#{user_name}'))) {
     return configuredUser;
   }
   let identityUser = null;
@@ -440,5 +440,7 @@ async function resolveUsernameForDisplay(configuredUser) {
       console.warn('Failed to retrieve user info via chrome.identity:', e);
     }
   }
-  return configuredUser.replace(/\$\{user_name\}/g, identityUser || 'Chrome User');
+  return configuredUser
+    .replace(/\$\{user_name\}/g, identityUser || 'Chrome User')
+    .replace(/#\{user_name\}/g, identityUser || 'Chrome User');
 }
