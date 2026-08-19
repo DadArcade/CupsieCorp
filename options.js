@@ -1,5 +1,8 @@
 import { normalizeIppPrinter, getMatchPattern } from './utils.js';
 
+const MIN_SYNC_INTERVAL_MINUTES = 1;
+const MAX_SYNC_INTERVAL_MINUTES = 7200;
+
 let loadedCredentials = {};
 let statusTimer = null;
 
@@ -78,7 +81,7 @@ function saveOptions() {
     ? defaultRequestingUserEl.dataset.rawValue
     : defaultRequestingUserEl.value.trim();
 
-  if (isNaN(syncInterval) || syncInterval < 1 || syncInterval > 1440) {
+  if (isNaN(syncInterval) || syncInterval < MIN_SYNC_INTERVAL_MINUTES || syncInterval > MAX_SYNC_INTERVAL_MINUTES) {
     showStatus('syncIntervalInvalid', 'error');
     return;
   }

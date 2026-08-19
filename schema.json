@@ -30,7 +30,7 @@
     "syncInterval": {
       "type": "integer",
       "minimum": 1,
-      "maximum": 1440,
+      "maximum": 7200,
       "description": "Background sync interval in minutes."
     },
     "defaultRequestingUser": {

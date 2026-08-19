@@ -128,6 +128,8 @@ chrome.runtime.onConnect.addListener((port) => {
 
 const BACKGROUND_SYNC_ALARM = 'SYNC_PRINTERS_ALARM';
 const DEFAULT_SYNC_INTERVAL_MINUTES = 1440;
+const MIN_SYNC_INTERVAL_MINUTES = 1;
+const MAX_SYNC_INTERVAL_MINUTES = 7200;
 const PRINT_JOB_TIMEOUT_MS = 600000;
 
 /**
@@ -389,10 +391,10 @@ async function updateAlarm() {
       if (managedItems && managedItems.syncInterval !== undefined) {
         const val = managedItems.syncInterval;
         const interval = parseInt(val, 10);
-        if (!isNaN(interval) && interval >= 1 && interval <= 1440) {
+        if (!isNaN(interval) && interval >= MIN_SYNC_INTERVAL_MINUTES && interval <= MAX_SYNC_INTERVAL_MINUTES) {
           managedInterval = interval;
         } else {
-          console.error(`Bad configuration value: Enterprise policy "syncInterval" is invalid (expected 1-1440):`, val);
+          console.error(`Bad configuration value: Enterprise policy "syncInterval" is invalid (expected ${MIN_SYNC_INTERVAL_MINUTES}-${MAX_SYNC_INTERVAL_MINUTES}):`, val);
         }
       }
     } catch (e) {
@@ -407,10 +409,10 @@ async function updateAlarm() {
     if (syncItems && syncItems.syncInterval !== undefined) {
       const val = syncItems.syncInterval;
       const interval = parseInt(val, 10);
-      if (!isNaN(interval) && interval >= 1 && interval <= 1440) {
+      if (!isNaN(interval) && interval >= MIN_SYNC_INTERVAL_MINUTES && interval <= MAX_SYNC_INTERVAL_MINUTES) {
         syncInterval = interval;
       } else {
-        console.error(`Bad configuration value: User option "syncInterval" is invalid (expected 1-1440):`, val);
+        console.error(`Bad configuration value: User option "syncInterval" is invalid (expected ${MIN_SYNC_INTERVAL_MINUTES}-${MAX_SYNC_INTERVAL_MINUTES}):`, val);
       }
     }
     period = managedInterval || syncInterval || DEFAULT_SYNC_INTERVAL_MINUTES;
