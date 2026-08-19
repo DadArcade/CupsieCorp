@@ -8,13 +8,13 @@ Designed for **zero-touch deployment**, administrators can silently deploy and m
 
 ## Key Features
 
-* **Zero-Touch Deployment**: Silently force-install and configure printers via Chrome policy without user prompts.
-* **Auto-Identity Resolution**: Uses the `identity` API (or `${user_name}` placeholders) to authorize print requests under active profile accounts.
-* **Native Chrome Print Integration**: Integrates IPP/CUPS printers seamlessly into the Chrome destination picker.
+* **Seamless Deployment**: Silently force-install and configure printers via Chrome policy without user prompts.
+* **Username enforcement**: Uses the `identity` API (or `${user_name}` placeholders) to authorize print requests under active profile accounts.
+* **Native Chrome Print Integration**: Integrates IPP/CUPS printers seamlessly into the Chrome printer selection list.
 * **Automatic Capability Mapping**: Auto-detects paper sizes, trays, duplex, color, scaling, and finishing options via IPP.
 * **Policy Precedence**: Managed policies automatically override or take precedence over manual user settings.
-* **Built-in Diagnostics**: Includes a logging UI to monitor connections, policy validation, and printer status codes.
-* **Reliable Background Printing**: Employs an offscreen keep-alive connection to ensure large print jobs transfer without worker timeouts.
+* **Detailed logging**: Includes a logging UI to monitor connections, policy validation, and printer status codes.
+* **Reliable Background Printing**: Employs an offscreen keep-alive connection and direct file streaming from the filesystem to ensure large print jobs transfer without worker timeouts.
 
 ---
 
@@ -41,7 +41,6 @@ While Cupsie is optimized for enterprise management, printers can also be config
 ## Privacy & Security
 
 Cupsie operates entirely locally within the browser. Printer communications remain on your local network—no data is sent to external servers.
-
 For details, view the full [Privacy Policy](privacy_policy.md).
 
 ## Personal version
