@@ -1,6 +1,6 @@
 # Cupsie Corp Printer Provider
 
-**Cupsie Corp** is an enterprise Chrome extension that connects CUPS print servers and standalone IPP/IPPS printers directly to the native Chrome print dialog using the `printerProvider` API.
+**Cupsie Corp** is an enterprise version of the original [Cupsie](https://github.com/DadArcade/cupsie) Chrome extension that connects CUPS print servers and standalone IPP/IPPS printers directly to the native Chrome print dialog.
 
 Designed for **zero-touch deployment**, administrators can silently deploy and manage print queues across fleet devices via Chrome enterprise policies.
 
