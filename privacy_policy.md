@@ -1,4 +1,4 @@
-# Privacy Policy for Cupsie Printer Provider
+# Privacy Policy for Cupsie Corp Printer Provider
 
 **Effective Date:** July 23, 2026
 
@@ -46,4 +46,4 @@ The Extension communicates with printers using standard web transport protocols.
 If you have any questions or feedback regarding this Privacy Policy or the security of the Extension, please contact:
 
 - **Support/Developer Email**: `cupsie@korobkin.org`
-- **Project Repository**: [github.com/DadArcade/cupsie](https://github.com/DadArcade/cupsie/)
+- **Project Repository**: [github.com/DadArcade/CupsieCorp](https://github.com/DadArcade/CupsieCorp/)
