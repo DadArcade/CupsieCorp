@@ -8,13 +8,13 @@ Designed for **zero-touch deployment**, administrators can silently deploy and m
 
 ## Key Features
 
-* **Seamless Deployment**: Silently force-install and configure printers via Chrome policy without user prompts.
+* **Seamless deployment**: Silently force-install and configure printers via Chrome policy without user prompts.
 * **Username enforcement**: Uses the `identity` API (or `${user_name}` placeholders) to authorize print requests under active profile accounts.
-* **Native Chrome Print Integration**: Integrates IPP/CUPS printers seamlessly into the Chrome printer selection list.
-* **Automatic Capability Mapping**: Auto-detects paper sizes, trays, duplex, color, scaling, and finishing options via IPP.
-* **Policy Precedence**: Managed policies automatically override or take precedence over manual user settings.
+* **Native Chrome print integration**: Integrates IPP/CUPS printers seamlessly into the Chrome printer selection list.
+* **Advanced printing features**: Auto-detects paper sizes, type, trays, duplex, stapling, and other finishing options as reported by the printer.
+* **Policy precedence**: Managed policies automatically override or take precedence over manual user settings.
 * **Detailed logging**: Includes a logging UI to monitor connections, policy validation, and printer status codes.
-* **Reliable Background Printing**: Employs an offscreen keep-alive connection and direct file streaming from the filesystem to ensure large print jobs transfer without worker timeouts.
+* **Reliable background printing**: Employs an offscreen keep-alive connection and direct file streaming from the filesystem to ensure large print jobs transfer without worker timeouts.
 
 ---
 
