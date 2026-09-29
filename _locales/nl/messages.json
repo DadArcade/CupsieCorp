@@ -1,0 +1,736 @@
+{
+  "extName": {
+    "message": "Cupsie Corp",
+    "description": "The name of the extension."
+  },
+  "extDesc": {
+    "message": "Enterprise-versie van Cupsie. Voegt op CUPS gebaseerde printers en IPP-printers toe aan het systeemeigen Chrome-afdrukvenster.",
+    "description": "Description of the extension."
+  },
+  "optionsPageTitle": {
+    "message": "Cupsie-opties",
+    "description": "Title of the options page in the browser tab."
+  },
+  "optionsPageHeader": {
+    "message": "Cupsie-configuratie",
+    "description": "Main header on the options page."
+  },
+  "managedPoliciesNote": {
+    "message": "Enterprise-beleid wordt automatisch toegevoegd. U kunt hieronder meer printers toevoegen.",
+    "description": "Explanatory note about enterprise settings."
+  },
+  "managedCupsLabel": {
+    "message": "Door de onderneming beheerde CUPS-servers",
+    "description": "Label for enterprise managed CUPS servers textarea."
+  },
+  "managedCupsPlaceholder": {
+    "message": "(Beheerde CUPS-servers)",
+    "description": "Placeholder for enterprise managed CUPS servers textarea."
+  },
+  "userCupsLabel": {
+    "message": "CUPS-servers",
+    "description": "Label for user custom CUPS servers."
+  },
+  "userCupsNote": {
+    "message": "Voer één IP-adres of URL per regel in (bijv. http://192.168.1.10:631). De extensie haalt automatisch alle wachtrijen van deze servers op.",
+    "description": "Instructions for custom CUPS servers."
+  },
+  "managedIppLabel": {
+    "message": "Door de onderneming beheerde zelfstandige IPP-printers",
+    "description": "Label for enterprise managed IPP printers textarea."
+  },
+  "managedIppPlaceholder": {
+    "message": "(Beheerde zelfstandige IPP-printers)",
+    "description": "Placeholder for enterprise managed IPP printers."
+  },
+  "userIppLabel": {
+    "message": "Zelfstandige IPP-printers",
+    "description": "Label for user custom IPP printers."
+  },
+  "userIppNote": {
+    "message": "Voer rechtstreekse HTTP/HTTPS- of IPP/IPPS-eindpunt-URL's en optionele weergavenamen in voor uw zelfstandige printers (bijv. ipp://192.168.1.50:631/ipp/print of http://192.168.1.50:631/ipp/print).",
+    "description": "Instructions for custom IPP printers."
+  },
+  "addIppPrinterButton": {
+    "message": "Nog een printer toevoegen",
+    "description": "Button to add a new user-defined IPP printer row."
+  },
+  "printerNamePlaceholder": {
+    "message": "Naam (optioneel)",
+    "description": "Placeholder for the optional display name input when adding an IPP printer."
+  },
+  "removePrinterTitle": {
+    "message": "Printer verwijderen",
+    "description": "Tooltip for the remove button on an IPP printer row."
+  },
+  "syncIntervalLabel": {
+    "message": "Interval voor achtergrondsynchronisatie (minuten)",
+    "description": "Label for sync interval selection."
+  },
+  "managedByPolicyBadge": {
+    "message": "(Beheerd door beleid)",
+    "description": "Badge shown when a field value is locked by enterprise policy."
+  },
+  "syncIntervalNote": {
+    "message": "Hoe vaak de extensie het netwerk controleert op nieuwe printers. Minimaal 1 minuut.",
+    "description": "Instruction note for background sync interval."
+  },
+  "defaultRequestingUserLabel": {
+    "message": "Standaard verzoekende gebruikersnaam",
+    "description": "Label for default requesting username input."
+  },
+  "defaultRequestingUserNote": {
+    "message": "De gebruikersnaam die wordt doorgegeven aan printers die geen authenticatie vereisen. Indien leeg gelaten, wordt de standaardnaam 'Chrome User' gebruikt.",
+    "description": "Explanatory note for default requesting username input."
+  },
+  "defaultRequestingUserPlaceholder": {
+    "message": "bijv. jan.jansen",
+    "description": "Placeholder for default requesting username input."
+  },
+  "syncIntervalInvalid": {
+    "message": "Interval voor achtergrondsynchronisatie moet tussen 1 en 7200 minuten liggen.",
+    "description": "Error message shown when the sync interval is out of bounds."
+  },
+  "lastSyncLabel": {
+    "message": "Laatste synchronisatie:",
+    "description": "Label showing the timestamp of the last printer sync."
+  },
+  "never": {
+    "message": "Nooit",
+    "description": "Default status when last sync time is missing."
+  },
+  "viewLogsLink": {
+    "message": "Probleemoplossingslogboeken bekijken →",
+    "description": "Link to the troubleshooting logs page."
+  },
+  "syncResultsHeader": {
+    "message": "Synchronisatieresultaten",
+    "description": "Section header for server and printer connection status."
+  },
+  "saveSettingsButton": {
+    "message": "Instellingen opslaan",
+    "description": "Submit button text."
+  },
+  "savingSettings": {
+    "message": "Instellingen opslaan en printers synchroniseren...",
+    "description": "Status text while saving."
+  },
+  "syncProgress": {
+    "message": "Instellingen opslaan en printers synchroniseren ($1/$2)...",
+    "description": "Progress text while saving and syncing.",
+    "placeholders": {
+      "COMPLETED": {
+        "content": "$1",
+        "example": "1"
+      },
+      "TOTAL": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "syncSuccess": {
+    "message": "Instellingen opgeslagen en printers gesynchroniseerd!",
+    "description": "Status text on successful save & sync."
+  },
+  "syncFailed": {
+    "message": "Instellingen opgeslagen, maar synchronisatie van printers is mislukt: $ERROR$",
+    "description": "Status text when sync fails.",
+    "placeholders": {
+      "ERROR": {
+        "content": "$1",
+        "example": "Network error"
+      }
+    }
+  },
+  "noPrintersConfigured": {
+    "message": "Geen printers of servers geconfigureerd.",
+    "description": "Shown in the sync status list when configuration is empty."
+  },
+  "sync_error_non_ipp": {
+    "message": "Geen IPP-antwoord (proxy-/firewallblokkering?)",
+    "description": "Error reason when server returns wrong Content-Type."
+  },
+  "sync_success_queues": {
+    "message": "$COUNT$ wachtrij(en) gevonden.",
+    "description": "Success message for CUPS server sync.",
+    "placeholders": {
+      "COUNT": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "sync_error_http": {
+    "message": "HTTP-fout: $STATUS$",
+    "description": "Error reason with status code.",
+    "placeholders": {
+      "STATUS": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "sync_error_network": {
+    "message": "Netwerkfout: $MESSAGE$",
+    "description": "Network exception message.",
+    "placeholders": {
+      "MESSAGE": {
+        "content": "$1",
+        "example": "Failed to fetch"
+      }
+    }
+  },
+  "sync_skipped_unauthorized": {
+    "message": "Overgeslagen (niet geautoriseerd)",
+    "description": "Status when the current user is not in the allowed user list."
+  },
+  "sync_skipped_ignored": {
+    "message": "Overgeslagen (Authenticatie genegeerd door gebruiker)",
+    "description": "Status message shown when a printer is skipped because user selected Don't Ask Again."
+  },
+  "sync_success_discovered": {
+    "message": "Gevonden: \"$NAME$\"",
+    "description": "Success message for standalone printer sync.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Office Printer"
+      }
+    }
+  },
+  "logsPageTitle": {
+    "message": "Probleemoplossingslogboeken - Printerprovider",
+    "description": "Logs page tab title."
+  },
+  "logsPageHeader": {
+    "message": "Probleemoplossingslogboeken",
+    "description": "Main header on the logs page."
+  },
+  "logsSubtitle": {
+    "message": "Laatste 2048 logboekvermeldingen vastgelegd van achtergrondbewerkingen",
+    "description": "Subtitle explaining logs duration."
+  },
+  "refreshButton": {
+    "message": "Vernieuwen",
+    "description": "Label for refresh logs button."
+  },
+  "downloadLogsButton": {
+    "message": "Logboek downloaden",
+    "description": "Label for download logs button."
+  },
+  "clearLogsButton": {
+    "message": "Logboeken wissen",
+    "description": "Label for clear logs button."
+  },
+  "timestampHeader": {
+    "message": "TIJDSTEMPEL",
+    "description": "Logs table column header."
+  },
+  "levelHeader": {
+    "message": "NIVEAU",
+    "description": "Logs table column header."
+  },
+  "messageHeader": {
+    "message": "BERICHT",
+    "description": "Logs table column header."
+  },
+  "backToSettingsLink": {
+    "message": "← Terug naar instellingen",
+    "description": "Button-link leading back to options.html."
+  },
+  "noLogsFound": {
+    "message": "Geen probleemoplossingslogboeken gevonden. Logboeken worden ingevuld wanneer er achtergrondacties plaatsvinden.",
+    "description": "Placeholder text when there are no logs to display."
+  },
+  "confirmClearLogs": {
+    "message": "Weet u zeker dat u alle probleemoplossingslogboeken wilt wissen?",
+    "description": "Confirm dialog message before wiping logs."
+  },
+  "downloadHeaderTitle": {
+    "message": "CUPSIE EXTENSIE PROBLEEMOPLOSSINGSLOGBOEK",
+    "description": "Header title inside the downloaded text log."
+  },
+  "printErrorPageTitle": {
+    "message": "Afdrukfout",
+    "description": "Tab title for error.html."
+  },
+  "printErrorHeader": {
+    "message": "Afdrukfout",
+    "description": "Header inside the error popup."
+  },
+  "dismiss": {
+    "message": "Sluiten",
+    "description": "Close button text in the error card."
+  },
+  "unknownErrorOccurred": {
+    "message": "Er is een onbekende fout opgetreden.",
+    "description": "Fallback error message."
+  },
+  "accessDenied": {
+    "message": "Toegang geweigerd",
+    "description": "Title of authorization block warning."
+  },
+  "accessDeniedMessage": {
+    "message": "U heeft geen toestemming om af te drukken naar/toegang te krijgen tot '$TARGET$'.",
+    "description": "Details for access denial.",
+    "placeholders": {
+      "TARGET": {
+        "content": "$1",
+        "example": "Marketing-Printer"
+      }
+    }
+  },
+  "printJobFailed": {
+    "message": "Afdrukopdracht mislukt",
+    "description": "Notification title when print dispatch fails."
+  },
+  "printJobFailedMessage": {
+    "message": "Opdracht '$TITLE$' is mislukt: $REASON$",
+    "description": "Details for print job failure.",
+    "placeholders": {
+      "TITLE": {
+        "content": "$1",
+        "example": "Tax_Report.pdf"
+      },
+      "REASON": {
+        "content": "$2",
+        "example": "Access Denied"
+      }
+    }
+  },
+  "ipp_error_0401": {
+    "message": "Niet geautoriseerd (Authenticatie vereist).",
+    "description": "IPP status code 0x0401 translation."
+  },
+  "ipp_error_0403": {
+    "message": "Toegang geweigerd: U heeft geen toestemming om op deze printer af te drukken.",
+    "description": "IPP status code 0x0403 translation."
+  },
+  "ipp_error_0407": {
+    "message": "Printerwachtrij niet gevonden op de afdrukserver.",
+    "description": "IPP status code 0x0407 translation."
+  },
+  "ipp_error_0408": {
+    "message": "Printerwachtrij is verdwenen of verwijderd.",
+    "description": "IPP status code 0x0408 translation."
+  },
+  "ipp_error_040b": {
+    "message": "Tegenstrijdige kenmerken opgegeven in het afdrukticket.",
+    "description": "IPP status code 0x040b translation."
+  },
+  "ipp_error_0506": {
+    "message": "De printer accepteert momenteel geen afdrukopdrachten.",
+    "description": "IPP status code 0x0506 translation."
+  },
+  "ipp_error_0507": {
+    "message": "0x507 - De printer is bezig",
+    "description": "IPP status code 0x0507 translation."
+  },
+  "ipp_error_unknown": {
+    "message": "Printer heeft statuscode $CODE$ geretourneerd.",
+    "description": "Generic IPP status code translation.",
+    "placeholders": {
+      "CODE": {
+        "content": "$1",
+        "example": "0x0400"
+      }
+    }
+  },
+  "errProxyFirewall": {
+    "message": "Verbinding geblokkeerd door proxy of firewall.",
+    "description": "HTTP post failure detail."
+  },
+  "errProxyGateway": {
+    "message": "Verbinding geweigerd door netwerkproxy/gateway.",
+    "description": "HTTP post failure detail."
+  },
+  "errHttpUnauthorized": {
+    "message": "Toegang geweigerd / Niet geautoriseerd (HTTP 401/403).",
+    "description": "HTTP post failure detail."
+  },
+  "errHttpProxyAuth": {
+    "message": "Proxy-authenticatie vereist (HTTP 407).",
+    "description": "HTTP post failure detail."
+  },
+  "errHttpBadGateway": {
+    "message": "Proxyfout of ongeldige gateway (HTTP 502/504).",
+    "description": "HTTP post failure detail."
+  },
+  "errConnectionFailed": {
+    "message": "Verbinding mislukt.",
+    "description": "Fallback print exception message."
+  },
+  "use_printer_default": {
+    "message": "Standaardinstelling van printer gebruiken",
+    "description": "Option value prepended to Advanced Settings Select elements."
+  },
+  "input_tray": {
+    "message": "Invoerlade",
+    "description": "Advanced print capability label."
+  },
+  "output_tray": {
+    "message": "Uitvoerlade",
+    "description": "Advanced print capability label."
+  },
+  "paper_type": {
+    "message": "Papiertype",
+    "description": "Advanced print capability label."
+  },
+  "print_scaling": {
+    "message": "Afdrukschaal",
+    "description": "Advanced print capability label."
+  },
+  "banner_page": {
+    "message": "Voorblad",
+    "description": "Advanced print capability label."
+  },
+  "page_delivery": {
+    "message": "Pagina-aflevervolgorde",
+    "description": "Advanced print capability label."
+  },
+  "orientation": {
+    "message": "Afdrukstand",
+    "description": "Advanced print capability label."
+  },
+  "collation": {
+    "message": "Sorteren",
+    "description": "Advanced print capability label."
+  },
+  "hold_until": {
+    "message": "Vasthouden tot",
+    "description": "Advanced print capability label."
+  },
+  "finishing_options": {
+    "message": "Afwerkingsopties",
+    "description": "Advanced print capability label."
+  },
+  "orient_portrait": {
+    "message": "Staand",
+    "description": "Orientation option value."
+  },
+  "orient_landscape": {
+    "message": "Liggend",
+    "description": "Orientation option value."
+  },
+  "orient_rev_landscape": {
+    "message": "Omgekeerd liggend",
+    "description": "Orientation option value."
+  },
+  "orient_rev_portrait": {
+    "message": "Omgekeerd staand",
+    "description": "Orientation option value."
+  },
+  "orient_none": {
+    "message": "Geen",
+    "description": "Orientation option value for none."
+  },
+  "orient_unknown": {
+    "message": "Afdrukstand nr. $VAL$",
+    "description": "Fallback orientation option.",
+    "placeholders": {
+      "VAL": {
+        "content": "$1",
+        "example": "7"
+      }
+    }
+  },
+  "col_uncollated": {
+    "message": "Ongesorteerd",
+    "description": "Collation option value."
+  },
+  "col_collated": {
+    "message": "Gesorteerd",
+    "description": "Collation option value."
+  },
+  "finish_none": {
+    "message": "Geen",
+    "description": "Finishing option value."
+  },
+  "finish_staple": {
+    "message": "Nieten",
+    "description": "Finishing option value."
+  },
+  "finish_punch": {
+    "message": "Perforeren",
+    "description": "Finishing option value."
+  },
+  "finish_cover": {
+    "message": "Omslag",
+    "description": "Finishing option value."
+  },
+  "finish_bind": {
+    "message": "Inbinden",
+    "description": "Finishing option value."
+  },
+  "finish_saddle_stitch": {
+    "message": "Zadelsteek",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch": {
+    "message": "Randhechting",
+    "description": "Finishing option value."
+  },
+  "finish_staple_top_left": {
+    "message": "Nietje linksboven",
+    "description": "Finishing option value."
+  },
+  "finish_staple_bottom_left": {
+    "message": "Nietje linksonder",
+    "description": "Finishing option value."
+  },
+  "finish_staple_top_right": {
+    "message": "Nietje rechtsboven",
+    "description": "Finishing option value."
+  },
+  "finish_staple_bottom_right": {
+    "message": "Nietje rechtsonder",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_left": {
+    "message": "Randhechting links",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_top": {
+    "message": "Randhechting boven",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_right": {
+    "message": "Randhechting rechts",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_bottom": {
+    "message": "Randhechting onder",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_left": {
+    "message": "Dubbel nietje links",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_top": {
+    "message": "Dubbel nietje boven",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_right": {
+    "message": "Dubbel nietje rechts",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_bottom": {
+    "message": "Dubbel nietje onder",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_left": {
+    "message": "Drievoudig nietje links",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_top": {
+    "message": "Drievoudig nietje boven",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_right": {
+    "message": "Drievoudig nietje rechts",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_bottom": {
+    "message": "Drievoudig nietje onder",
+    "description": "Finishing option value."
+  },
+  "finish_bind_left": {
+    "message": "Inbinden links",
+    "description": "Finishing option value."
+  },
+  "finish_bind_top": {
+    "message": "Inbinden boven",
+    "description": "Finishing option value."
+  },
+  "finish_bind_right": {
+    "message": "Inbinden rechts",
+    "description": "Finishing option value."
+  },
+  "finish_bind_bottom": {
+    "message": "Inbinden onder",
+    "description": "Finishing option value."
+  },
+  "finish_trim": {
+    "message": "Snijden",
+    "description": "Finishing option value."
+  },
+  "finish_punch_dual_left": {
+    "message": "Dubbele perforatie links",
+    "description": "Finishing option value."
+  },
+  "finish_punch_dual_top": {
+    "message": "Dubbele perforatie boven",
+    "description": "Finishing option value."
+  },
+  "finish_punch_dual_right": {
+    "message": "Dubbele perforatie rechts",
+    "description": "Finishing option value."
+  },
+  "finish_punch_triple_left": {
+    "message": "Drievoudige perforatie links",
+    "description": "Finishing option value."
+  },
+  "finish_punch_triple_top": {
+    "message": "Drievoudige perforatie boven",
+    "description": "Finishing option value."
+  },
+  "finish_punch_triple_right": {
+    "message": "Drievoudige perforatie rechts",
+    "description": "Finishing option value."
+  },
+  "finish_punch_quad_left": {
+    "message": "Vervoudige perforatie links",
+    "description": "Finishing option value."
+  },
+  "finish_punch_quad_top": {
+    "message": "Vervoudige perforatie boven",
+    "description": "Finishing option value."
+  },
+  "finish_punch_quad_right": {
+    "message": "Vervoudige perforatie rechts",
+    "description": "Finishing option value."
+  },
+  "finish_fold_accordion": {
+    "message": "Harmonica-vouw",
+    "description": "Finishing option value."
+  },
+  "finish_fold_double_gate": {
+    "message": "Dubbele luikvouw",
+    "description": "Finishing option value."
+  },
+  "finish_fold_gate": {
+    "message": "Luikvouw",
+    "description": "Finishing option value."
+  },
+  "finish_fold_half": {
+    "message": "Enkele vouw",
+    "description": "Finishing option value."
+  },
+  "finish_fold_half_z": {
+    "message": "Halve Z-vouw",
+    "description": "Finishing option value."
+  },
+  "finish_fold_left_gate": {
+    "message": "Luikvouw links",
+    "description": "Finishing option value."
+  },
+  "finish_fold_letter": {
+    "message": "Briefvouw",
+    "description": "Finishing option value."
+  },
+  "finish_fold_poster": {
+    "message": "Postervouw",
+    "description": "Finishing option value."
+  },
+  "finish_fold_right_gate": {
+    "message": "Luikvouw rechts",
+    "description": "Finishing option value."
+  },
+  "finish_fold_z": {
+    "message": "Z-vouw",
+    "description": "Finishing option value."
+  },
+  "finish_unknown": {
+    "message": "Afwerking nr. $VAL$",
+    "description": "Fallback finishing option.",
+    "placeholders": {
+      "VAL": {
+        "content": "$1",
+        "example": "100"
+      }
+    }
+  },
+  "permissionsRequired": {
+    "message": "Verbindingsmachtigingen zijn vereist om deze printers te synchroniseren.",
+    "description": "Error displayed when user denies permission to query the printer host."
+  },
+  "syncedPermissionsMissing": {
+    "message": "Verbindingsmachtigingen voor sommige gesynchroniseerde printers ontbreken op dit apparaat. Klik op 'Instellingen opslaan' om toegang verlenen.",
+    "description": "Warning message shown when restored sync settings require permissions that haven't been granted on this device."
+  },
+  "loginPageTitle": {
+    "message": "Printerauthenticatie",
+    "description": "Title of the login dialog window."
+  },
+  "loginPageHeader": {
+    "message": "Printerinloggen vereist",
+    "description": "Header in the login dialog."
+  },
+  "loginPageSubheader": {
+    "message": "De volgende printer(s) of CUPS-server(s) vereisen inloggegevens om verbinding te maken:",
+    "description": "Description text in the login dialog."
+  },
+  "loginUsernamePlaceholder": {
+    "message": "Gebruikersnaam",
+    "description": "Placeholder for the username input field."
+  },
+  "loginPasswordPlaceholder": {
+    "message": "Wachtwoord",
+    "description": "Placeholder for the password input field."
+  },
+  "loginSaveButton": {
+    "message": "Inloggegevens opslaan",
+    "description": "Button to save credentials and try sync."
+  },
+  "loginCancelButton": {
+    "message": "Annuleren",
+    "description": "Button to close the login dialog."
+  },
+  "loginErrorAuthFailed": {
+    "message": "Authenticatie mislukt. Controleer uw inloggegevens.",
+    "description": "Error message when verification fails."
+  },
+  "loginSuccessMsg": {
+    "message": "Verbinden...",
+    "description": "Status message when credentials verified."
+  },
+  "loginIgnoreCheckbox": {
+    "message": "Niet opnieuw vragen (deze printer/server overslaan)",
+    "description": "Label for the ignore/skip checkbox on the login dialog."
+  },
+  "loginNoAuthRequired": {
+    "message": "Momenteel is er geen authenticatie vereist.",
+    "description": "Status message shown if no authentication is required."
+  },
+  "loginErrorSaveFailed": {
+    "message": "Kan instellingen niet opslaan.",
+    "description": "Error message when saving credentials fails."
+  },
+  "loginErrorCommError": {
+    "message": "Communicatiefout met achtergrondpagina.",
+    "description": "Error message when communication with the background script fails."
+  },
+  "loginSuccessVerified": {
+    "message": "Alle verbindingen zijn succesvol geverifieerd!",
+    "description": "Status message shown when all connection credentials have been verified."
+  },
+  "loginErrorVerificationFailed": {
+    "message": "Verificatie mislukt.",
+    "description": "Error message when verification fails due to internal errors."
+  },
+  "storedCredentialsLabel": {
+    "message": "Opgeslagen inloggegevens",
+    "description": "Label for the stored credentials section."
+  },
+  "storedCredentialsNote": {
+    "message": "Opgeslagen inloggegevens voor printers en CUPS-servers die authenticatie vereisen.",
+    "description": "Explanatory note for the stored credentials section."
+  },
+  "noStoredCredentials": {
+    "message": "Geen opgeslagen inloggegevens gevonden.",
+    "description": "Message shown when there are no stored credentials."
+  },
+  "removeCredentialTitle": {
+    "message": "Inloggegevens verwijderen",
+    "description": "Tooltip for the remove button of a stored credential."
+  },
+  "loginErrorLoadFailed": {
+    "message": "Kan authenticatievereisten niet laden.",
+    "description": "Error message when loading authentication required devices from local storage fails."
+  },
+  "loginDisclaimer": {
+    "message": "Uw wachtwoord wordt in leesbare tekst op de schijf opgeslagen.",
+    "description": "Warning message shown when user is about to save credentials."
+  }
+}

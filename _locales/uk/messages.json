@@ -1,0 +1,736 @@
+{
+  "extName": {
+    "message": "Cupsie Corp",
+    "description": "The name of the extension."
+  },
+  "extDesc": {
+    "message": "Корпоративна версія Cupsie. Додає принтери на основі CUPS та IPP-принтери до стандартного діалогового вікна друку Chrome.",
+    "description": "Description of the extension."
+  },
+  "optionsPageTitle": {
+    "message": "Параметри Cupsie",
+    "description": "Title of the options page in the browser tab."
+  },
+  "optionsPageHeader": {
+    "message": "Конфігурація Cupsie",
+    "description": "Main header on the options page."
+  },
+  "managedPoliciesNote": {
+    "message": "Корпоративні політики додаються автоматично. Ви можете додати більше принтерів нижче.",
+    "description": "Explanatory note about enterprise settings."
+  },
+  "managedCupsLabel": {
+    "message": "Сервери CUPS під управлінням підприємства",
+    "description": "Label for enterprise managed CUPS servers textarea."
+  },
+  "managedCupsPlaceholder": {
+    "message": "(Керовані сервери CUPS)",
+    "description": "Placeholder for enterprise managed CUPS servers textarea."
+  },
+  "userCupsLabel": {
+    "message": "Сервери CUPS",
+    "description": "Label for user custom CUPS servers."
+  },
+  "userCupsNote": {
+    "message": "Введіть один IP або URL на рядок (наприклад, http://192.168.1.10:631). Розширення автоматично отримає всі черги з цих серверів.",
+    "description": "Instructions for custom CUPS servers."
+  },
+  "managedIppLabel": {
+    "message": "Окремі IPP-принтери під управлінням підприємства",
+    "description": "Label for enterprise managed IPP printers textarea."
+  },
+  "managedIppPlaceholder": {
+    "message": "(Керовані окремі IPP-принтери)",
+    "description": "Placeholder for enterprise managed IPP printers."
+  },
+  "userIppLabel": {
+    "message": "Окремі IPP-принтери",
+    "description": "Label for user custom IPP printers."
+  },
+  "userIppNote": {
+    "message": "Введіть прямі URL-адреси кінцевих точок HTTP/HTTPS або IPP/IPPS та необов'язкові відображувані назви для вашіх окремих принтерів (наприклад, ipp://192.168.1.50:631/ipp/print або http://192.168.1.50:631/ipp/print).",
+    "description": "Instructions for custom IPP printers."
+  },
+  "addIppPrinterButton": {
+    "message": "Додати інший принтер",
+    "description": "Button to add a new user-defined IPP printer row."
+  },
+  "printerNamePlaceholder": {
+    "message": "Назва (необов'язково)",
+    "description": "Placeholder for the optional display name input when adding an IPP printer."
+  },
+  "removePrinterTitle": {
+    "message": "Видалити принтер",
+    "description": "Tooltip for the remove button on an IPP printer row."
+  },
+  "syncIntervalLabel": {
+    "message": "Інтервал фонової синхронізації (хвилини)",
+    "description": "Label for sync interval selection."
+  },
+  "managedByPolicyBadge": {
+    "message": "(Керується політикою)",
+    "description": "Badge shown when a field value is locked by enterprise policy."
+  },
+  "syncIntervalNote": {
+    "message": "Як часто розширення перевіряє мережу на наявність нових принтерів. Мінімум 1 хвилина.",
+    "description": "Instruction note for background sync interval."
+  },
+  "defaultRequestingUserLabel": {
+    "message": "Ім'я користувача-запитувача за замовчуванням",
+    "description": "Label for default requesting username input."
+  },
+  "defaultRequestingUserNote": {
+    "message": "Ім'я користувача, яке передається принтерам, що не вимагають автентифікації. Якщо залишити порожнім, буде використано ім'я за замовчуванням 'Chrome User'.",
+    "description": "Explanatory note for default requesting username input."
+  },
+  "defaultRequestingUserPlaceholder": {
+    "message": "наприклад, ivan.petrenko",
+    "description": "Placeholder for default requesting username input."
+  },
+  "syncIntervalInvalid": {
+    "message": "Інтервал фонової синхронізації повинен бути від 1 до 7200 хвилин.",
+    "description": "Error message shown when the sync interval is out of bounds."
+  },
+  "lastSyncLabel": {
+    "message": "Остання синхронізація:",
+    "description": "Label showing the timestamp of the last printer sync."
+  },
+  "never": {
+    "message": "Ніколи",
+    "description": "Default status when last sync time is missing."
+  },
+  "viewLogsLink": {
+    "message": "Переглянути журнали усунення несправностей →",
+    "description": "Link to the troubleshooting logs page."
+  },
+  "syncResultsHeader": {
+    "message": "Результати синхронізації",
+    "description": "Section header for server and printer connection status."
+  },
+  "saveSettingsButton": {
+    "message": "Зберегти налаштування",
+    "description": "Submit button text."
+  },
+  "savingSettings": {
+    "message": "Збереження налаштувань та синхронізація принтерів...",
+    "description": "Status text while saving."
+  },
+  "syncProgress": {
+    "message": "Збереження налаштувань та синхронізація принтерів ($1/$2)...",
+    "description": "Progress text while saving and syncing.",
+    "placeholders": {
+      "COMPLETED": {
+        "content": "$1",
+        "example": "1"
+      },
+      "TOTAL": {
+        "content": "$2",
+        "example": "5"
+      }
+    }
+  },
+  "syncSuccess": {
+    "message": "Налаштування збережено, принтери синхронізовано!",
+    "description": "Status text on successful save & sync."
+  },
+  "syncFailed": {
+    "message": "Налаштування збережено, але синхронізація принтерів не вдалася: $ERROR$",
+    "description": "Status text when sync fails.",
+    "placeholders": {
+      "ERROR": {
+        "content": "$1",
+        "example": "Network error"
+      }
+    }
+  },
+  "noPrintersConfigured": {
+    "message": "Не налаштовано жодного принтера або сервера.",
+    "description": "Shown in the sync status list when configuration is empty."
+  },
+  "sync_error_non_ipp": {
+    "message": "Відповідь не IPP (блокування проксі/брандмауером?)",
+    "description": "Error reason when server returns wrong Content-Type."
+  },
+  "sync_success_queues": {
+    "message": "Знайдено $COUNT$ чергу(и).",
+    "description": "Success message for CUPS server sync.",
+    "placeholders": {
+      "COUNT": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "sync_error_http": {
+    "message": "Помилка HTTP: $STATUS$",
+    "description": "Error reason with status code.",
+    "placeholders": {
+      "STATUS": {
+        "content": "$1",
+        "example": "500"
+      }
+    }
+  },
+  "sync_error_network": {
+    "message": "Помилка мережі: $MESSAGE$",
+    "description": "Network exception message.",
+    "placeholders": {
+      "MESSAGE": {
+        "content": "$1",
+        "example": "Failed to fetch"
+      }
+    }
+  },
+  "sync_skipped_unauthorized": {
+    "message": "Пропущено (не авторизовано)",
+    "description": "Status when the current user is not in the allowed user list."
+  },
+  "sync_skipped_ignored": {
+    "message": "Пропущено (Автентифікація ігнорується користувачем)",
+    "description": "Status message shown when a printer is skipped because user selected Don't Ask Again."
+  },
+  "sync_success_discovered": {
+    "message": "Виявлено: «$NAME$»",
+    "description": "Success message for standalone printer sync.",
+    "placeholders": {
+      "NAME": {
+        "content": "$1",
+        "example": "Office Printer"
+      }
+    }
+  },
+  "logsPageTitle": {
+    "message": "Журнали усунення несправностей - Провайдер друку",
+    "description": "Logs page tab title."
+  },
+  "logsPageHeader": {
+    "message": "Журнали усунення несправностей",
+    "description": "Main header on the logs page."
+  },
+  "logsSubtitle": {
+    "message": "Останні 2048 записів журналу, отримані з фонових операцій",
+    "description": "Subtitle explaining logs duration."
+  },
+  "refreshButton": {
+    "message": "Оновити",
+    "description": "Label for refresh logs button."
+  },
+  "downloadLogsButton": {
+    "message": "Завантажити журнал",
+    "description": "Label for download logs button."
+  },
+  "clearLogsButton": {
+    "message": "Очистити журнали",
+    "description": "Label for clear logs button."
+  },
+  "timestampHeader": {
+    "message": "ЧАСОВА МІТКА",
+    "description": "Logs table column header."
+  },
+  "levelHeader": {
+    "message": "РІВЕНЬ",
+    "description": "Logs table column header."
+  },
+  "messageHeader": {
+    "message": "ПОВІДОМЛЕННЯ",
+    "description": "Logs table column header."
+  },
+  "backToSettingsLink": {
+    "message": "← Назад до налаштувань",
+    "description": "Button-link leading back to options.html."
+  },
+  "noLogsFound": {
+    "message": "Журналів усунення несправностей не знайдено. Журнали заповнюватимуться під час виконання фонових дій.",
+    "description": "Placeholder text when there are no logs to display."
+  },
+  "confirmClearLogs": {
+    "message": "Ви дійсно бажаєте очистити всі журнали усунення несправностей?",
+    "description": "Confirm dialog message before wiping logs."
+  },
+  "downloadHeaderTitle": {
+    "message": "ЖУРНАЛ УСУНЕННЯ НЕСПРАВНОСТЕЙ РОЗШИРЕННЯ CUPSIE",
+    "description": "Header title inside the downloaded text log."
+  },
+  "printErrorPageTitle": {
+    "message": "Помилка друку",
+    "description": "Tab title for error.html."
+  },
+  "printErrorHeader": {
+    "message": "Помилка друку",
+    "description": "Header inside the error popup."
+  },
+  "dismiss": {
+    "message": "Закрити",
+    "description": "Close button text in the error card."
+  },
+  "unknownErrorOccurred": {
+    "message": "Сталася невідома помилка.",
+    "description": "Fallback error message."
+  },
+  "accessDenied": {
+    "message": "Доступ заборонено",
+    "description": "Title of authorization block warning."
+  },
+  "accessDeniedMessage": {
+    "message": "У вас немає дозволу на друк/доступ до «$TARGET$».",
+    "description": "Details for access denial.",
+    "placeholders": {
+      "TARGET": {
+        "content": "$1",
+        "example": "Marketing-Printer"
+      }
+    }
+  },
+  "printJobFailed": {
+    "message": "Збій завдання друку",
+    "description": "Notification title when print dispatch fails."
+  },
+  "printJobFailedMessage": {
+    "message": "Завдання «$TITLE$» не вдалося: $REASON$",
+    "description": "Details for print job failure.",
+    "placeholders": {
+      "TITLE": {
+        "content": "$1",
+        "example": "Tax_Report.pdf"
+      },
+      "REASON": {
+        "content": "$2",
+        "example": "Access Denied"
+      }
+    }
+  },
+  "ipp_error_0401": {
+    "message": "Не авторизовано (потрібна автентифікація).",
+    "description": "IPP status code 0x0401 translation."
+  },
+  "ipp_error_0403": {
+    "message": "Доступ заборонено: у вас немає дозволу на друк на цьому принтері.",
+    "description": "IPP status code 0x0403 translation."
+  },
+  "ipp_error_0407": {
+    "message": "Чергу принтера не знайдено на сервері друку.",
+    "description": "IPP status code 0x0407 translation."
+  },
+  "ipp_error_0408": {
+    "message": "Черга принтера відсутня або видалена.",
+    "description": "IPP status code 0x0408 translation."
+  },
+  "ipp_error_040b": {
+    "message": "У квитку друку вказано конфліктні атрибути.",
+    "description": "IPP status code 0x040b translation."
+  },
+  "ipp_error_0506": {
+    "message": "Принтер наразі не приймає завдання друку.",
+    "description": "IPP status code 0x0506 translation."
+  },
+  "ipp_error_0507": {
+    "message": "0x507 - Принтер зайнятий",
+    "description": "IPP status code 0x0507 translation."
+  },
+  "ipp_error_unknown": {
+    "message": "Принтер повернув код стану $CODE$.",
+    "description": "Generic IPP status code translation.",
+    "placeholders": {
+      "CODE": {
+        "content": "$1",
+        "example": "0x0400"
+      }
+    }
+  },
+  "errProxyFirewall": {
+    "message": "З'єднання заблоковано проксі-сервером або брандмауером.",
+    "description": "HTTP post failure detail."
+  },
+  "errProxyGateway": {
+    "message": "З'єднання відхилено мережевим проксі/шлюзом.",
+    "description": "HTTP post failure detail."
+  },
+  "errHttpUnauthorized": {
+    "message": "Доступ заборонено / Не авторизовано (HTTP 401/403).",
+    "description": "HTTP post failure detail."
+  },
+  "errHttpProxyAuth": {
+    "message": "Потрібна автентифікація проксі-сервера (HTTP 407).",
+    "description": "HTTP post failure detail."
+  },
+  "errHttpBadGateway": {
+    "message": "Помилка проксі-сервера або некоректний шлюз (HTTP 502/504).",
+    "description": "HTTP post failure detail."
+  },
+  "errConnectionFailed": {
+    "message": "Збій з'єднання.",
+    "description": "Fallback print exception message."
+  },
+  "use_printer_default": {
+    "message": "Використовувати за замовчуванням для принтера",
+    "description": "Option value prepended to Advanced Settings Select elements."
+  },
+  "input_tray": {
+    "message": "Лоток подачі",
+    "description": "Advanced print capability label."
+  },
+  "output_tray": {
+    "message": "Вихідний лоток",
+    "description": "Advanced print capability label."
+  },
+  "paper_type": {
+    "message": "Тип паперу",
+    "description": "Advanced print capability label."
+  },
+  "print_scaling": {
+    "message": "Масштабування друку",
+    "description": "Advanced print capability label."
+  },
+  "banner_page": {
+    "message": "Титульна сторінка",
+    "description": "Advanced print capability label."
+  },
+  "page_delivery": {
+    "message": "Порядок видачі сторінок",
+    "description": "Advanced print capability label."
+  },
+  "orientation": {
+    "message": "Орієнтація",
+    "description": "Advanced print capability label."
+  },
+  "collation": {
+    "message": "Сортування",
+    "description": "Advanced print capability label."
+  },
+  "hold_until": {
+    "message": "Затримати до",
+    "description": "Advanced print capability label."
+  },
+  "finishing_options": {
+    "message": "Параметри фінішної обробки",
+    "description": "Advanced print capability label."
+  },
+  "orient_portrait": {
+    "message": "Книжкова",
+    "description": "Orientation option value."
+  },
+  "orient_landscape": {
+    "message": "Альбомна",
+    "description": "Orientation option value."
+  },
+  "orient_rev_landscape": {
+    "message": "Обернена альбомна",
+    "description": "Orientation option value."
+  },
+  "orient_rev_portrait": {
+    "message": "Обернена книжкова",
+    "description": "Orientation option value."
+  },
+  "orient_none": {
+    "message": "Немає",
+    "description": "Orientation option value for none."
+  },
+  "orient_unknown": {
+    "message": "Орієнтація № $VAL$",
+    "description": "Fallback orientation option.",
+    "placeholders": {
+      "VAL": {
+        "content": "$1",
+        "example": "7"
+      }
+    }
+  },
+  "col_uncollated": {
+    "message": "Без сортування",
+    "description": "Collation option value."
+  },
+  "col_collated": {
+    "message": "З сортуванням",
+    "description": "Collation option value."
+  },
+  "finish_none": {
+    "message": "Немає",
+    "description": "Finishing option value."
+  },
+  "finish_staple": {
+    "message": "Зкріплення скобою",
+    "description": "Finishing option value."
+  },
+  "finish_punch": {
+    "message": "Перфорація",
+    "description": "Finishing option value."
+  },
+  "finish_cover": {
+    "message": "Обкладинка",
+    "description": "Finishing option value."
+  },
+  "finish_bind": {
+    "message": "Палітурка",
+    "description": "Finishing option value."
+  },
+  "finish_saddle_stitch": {
+    "message": "Шиття брошури",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch": {
+    "message": "Бокове зкріплення",
+    "description": "Finishing option value."
+  },
+  "finish_staple_top_left": {
+    "message": "Скоба зверху ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_staple_bottom_left": {
+    "message": "Скоба знизу ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_staple_top_right": {
+    "message": "Скоба зверху праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_staple_bottom_right": {
+    "message": "Скоба знизу праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_left": {
+    "message": "Бокове зкріплення ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_top": {
+    "message": "Бокове зкріплення зверху",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_right": {
+    "message": "Бокове зкріплення праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_edge_stitch_bottom": {
+    "message": "Бокове зкріплення знизу",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_left": {
+    "message": "Подвійна скоба ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_top": {
+    "message": "Подвійна скоба зверху",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_right": {
+    "message": "Подвійна скоба праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_staple_dual_bottom": {
+    "message": "Подвійна скоба знизу",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_left": {
+    "message": "Потрійна скоба ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_top": {
+    "message": "Потрійна скоба зверху",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_right": {
+    "message": "Потрійна скоба праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_staple_triple_bottom": {
+    "message": "Потрійна скоба знизу",
+    "description": "Finishing option value."
+  },
+  "finish_bind_left": {
+    "message": "Палітурка ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_bind_top": {
+    "message": "Палітурка зверху",
+    "description": "Finishing option value."
+  },
+  "finish_bind_right": {
+    "message": "Палітурка праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_bind_bottom": {
+    "message": "Палітурка знизу",
+    "description": "Finishing option value."
+  },
+  "finish_trim": {
+    "message": "Обрізання",
+    "description": "Finishing option value."
+  },
+  "finish_punch_dual_left": {
+    "message": "Подвійна перфорація ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_punch_dual_top": {
+    "message": "Подвійна перфорація зверху",
+    "description": "Finishing option value."
+  },
+  "finish_punch_dual_right": {
+    "message": "Подвійна перфорація праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_punch_triple_left": {
+    "message": "Потрійна перфорація ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_punch_triple_top": {
+    "message": "Потрійна перфорація зверху",
+    "description": "Finishing option value."
+  },
+  "finish_punch_triple_right": {
+    "message": "Потрійна перфорація праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_punch_quad_left": {
+    "message": "Чотириразова перфорація ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_punch_quad_top": {
+    "message": "Чотириразова перфорація зверху",
+    "description": "Finishing option value."
+  },
+  "finish_punch_quad_right": {
+    "message": "Чотириразова перфорація праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_fold_accordion": {
+    "message": "Згинання гармошкою",
+    "description": "Finishing option value."
+  },
+  "finish_fold_double_gate": {
+    "message": "Подвійне віконне згинання",
+    "description": "Finishing option value."
+  },
+  "finish_fold_gate": {
+    "message": "Віконне згинання",
+    "description": "Finishing option value."
+  },
+  "finish_fold_half": {
+    "message": "Згинання навпіл",
+    "description": "Finishing option value."
+  },
+  "finish_fold_half_z": {
+    "message": "Напів-Z згинання",
+    "description": "Finishing option value."
+  },
+  "finish_fold_left_gate": {
+    "message": "Віконне згинання ліворуч",
+    "description": "Finishing option value."
+  },
+  "finish_fold_letter": {
+    "message": "Листове згинання",
+    "description": "Finishing option value."
+  },
+  "finish_fold_poster": {
+    "message": "Плакатне згинання",
+    "description": "Finishing option value."
+  },
+  "finish_fold_right_gate": {
+    "message": "Віконне згинання праворуч",
+    "description": "Finishing option value."
+  },
+  "finish_fold_z": {
+    "message": "Z-подібне згинання",
+    "description": "Finishing option value."
+  },
+  "finish_unknown": {
+    "message": "Фінішна обробка № $VAL$",
+    "description": "Fallback finishing option.",
+    "placeholders": {
+      "VAL": {
+        "content": "$1",
+        "example": "100"
+      }
+    }
+  },
+  "permissionsRequired": {
+    "message": "Для синхронізації цих принтерів потрібні дозволи на з'єднання.",
+    "description": "Error displayed when user denies permission to query the printer host."
+  },
+  "syncedPermissionsMissing": {
+    "message": "На цьому пристрої відсутні дозволи на з'єднання для деяких синхронізованих принтерів. Будь ласка, натисніть 'Зберегти налаштування', щоб надати доступ.",
+    "description": "Warning message shown when restored sync settings require permissions that haven't been granted on this device."
+  },
+  "loginPageTitle": {
+    "message": "Автентифікація принтера",
+    "description": "Title of the login dialog window."
+  },
+  "loginPageHeader": {
+    "message": "Потрібно увійти до принтера",
+    "description": "Header in the login dialog."
+  },
+  "loginPageSubheader": {
+    "message": "Для підключення до наступних принтерів або серверів CUPS потрібні облікові дані:",
+    "description": "Description text in the login dialog."
+  },
+  "loginUsernamePlaceholder": {
+    "message": "Ім'я користувача",
+    "description": "Placeholder for the username input field."
+  },
+  "loginPasswordPlaceholder": {
+    "message": "Пароль",
+    "description": "Placeholder for the password input field."
+  },
+  "loginSaveButton": {
+    "message": "Зберегти облікові дані",
+    "description": "Button to save credentials and try sync."
+  },
+  "loginCancelButton": {
+    "message": "Скасувати",
+    "description": "Button to close the login dialog."
+  },
+  "loginErrorAuthFailed": {
+    "message": "Помилка автентифікації. Перевірте облікові дані.",
+    "description": "Error message when verification fails."
+  },
+  "loginSuccessMsg": {
+    "message": "Підключення...",
+    "description": "Status message when credentials verified."
+  },
+  "loginIgnoreCheckbox": {
+    "message": "Не запитувати знову (пропустити цей принтер/сервер)",
+    "description": "Label for the ignore/skip checkbox on the login dialog."
+  },
+  "loginNoAuthRequired": {
+    "message": "Наразі автентифікація не потрібна.",
+    "description": "Status message shown if no authentication is required."
+  },
+  "loginErrorSaveFailed": {
+    "message": "Не вдалося зберегти налаштування.",
+    "description": "Error message when saving credentials fails."
+  },
+  "loginErrorCommError": {
+    "message": "Помилка зв'язку з фоновою сторінкою.",
+    "description": "Error message when communication with the background script fails."
+  },
+  "loginSuccessVerified": {
+    "message": "Усі з'єднання успішно перевірено!",
+    "description": "Status message shown when all connection credentials have been verified."
+  },
+  "loginErrorVerificationFailed": {
+    "message": "Перевірка не вдалася.",
+    "description": "Error message when verification fails due to internal errors."
+  },
+  "storedCredentialsLabel": {
+    "message": "Збережені облікові дані",
+    "description": "Label for the stored credentials section."
+  },
+  "storedCredentialsNote": {
+    "message": "Збережені облікові дані для принтерів і серверів CUPS, які вимагають автентифікації.",
+    "description": "Explanatory note for the stored credentials section."
+  },
+  "noStoredCredentials": {
+    "message": "Збережених облікових даних не знайдено.",
+    "description": "Message shown when there are no stored credentials."
+  },
+  "removeCredentialTitle": {
+    "message": "Видалити облікові дані",
+    "description": "Tooltip for the remove button of a stored credential."
+  },
+  "loginErrorLoadFailed": {
+    "message": "Не вдалося завантажити вимоги автентифікації.",
+    "description": "Error message when loading authentication required devices from local storage fails."
+  },
+  "loginDisclaimer": {
+    "message": "Ваш пароль зберігатиметься у відкритому вигляді на диску.",
+    "description": "Warning message shown when user is about to save credentials."
+  }
+}

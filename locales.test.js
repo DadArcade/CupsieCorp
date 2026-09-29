@@ -11,7 +11,10 @@ const locales = [
   { code: 'es', name: 'Spanish' },
   { code: 'pt_BR', name: 'Brazilian Portuguese' },
   { code: 'pt_PT', name: 'European Portuguese' },
-  { code: 'de', name: 'German' }
+  { code: 'de', name: 'German' },
+  { code: 'nl', name: 'Dutch' },
+  { code: 'it', name: 'Italian' },
+  { code: 'uk', name: 'Ukrainian' }
 ];
 
 for (const { code, name } of locales) {
